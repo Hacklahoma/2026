@@ -10,8 +10,6 @@ The Hacklahoma Website is the official online hub for the Hacklahoma 2026 event.
 - [Technologies and Libraries](#technologies-and-libraries)
 - [Plan of Work](#plan-of-work)
 - [Setup and Running Locally](#setup-and-running-locally)
-  - [Installing and Running MongoDB on Windows](#installing-and-running-mongodb-on-windows)
-  - [Installing and Running MongoDB on macOS](#installing-and-running-mongodb-on-macos)
 - [Deployment Instructions](#deployment-instructions)
 
 ## Overview
