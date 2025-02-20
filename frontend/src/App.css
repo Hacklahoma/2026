@@ -1,5 +1,15 @@
+/* body */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 #root {
   max-width: 1280px;
+  min-width: 325px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
