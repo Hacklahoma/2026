@@ -39,15 +39,15 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user by email
+    // Find the user by email
     const user = await User.findOne({ email });
-    if(!user) {
+    if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     // Compare provided password with hashed password
     const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch) {
+    if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -58,9 +58,36 @@ exports.login = async (req, res) => {
       { expiresIn: '1h' }
     );
 
-    return res.status(200).json({ token, role: user.role });
-  } catch(err) {
+    // Set the token in an HTTP-only cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false, // set to true if using HTTPS in production
+      sameSite: 'lax',
+      maxAge: 3600000  // 1 hour in milliseconds
+    });
+
+    return res.status(200).json({ message: 'Login successful', role: user.role });
+  } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.verify = (req, res) => {
+  // Retrieve the token from the cookies (ensure cookie-parser is used in server.js)
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ authenticated: false, message: 'No token provided' });
+  }
+
+  try {
+    // Verify token using the secret
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // If valid, return authenticated true and the user's role
+    return res.json({ authenticated: true, role: decoded.role });
+  } catch (err) {
+    console.error('Token verification error:', err);
+    return res.status(401).json({ authenticated: false, message: 'Invalid token' });
   }
 };

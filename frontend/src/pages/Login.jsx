@@ -1,21 +1,56 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
 import '../styles/Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setModalMessage('');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log(formData);
+    setLoading(true);
+    setModalOpen(true);
+    setModalMessage('Please wait, logging in...');
+    
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', formData, {
+        withCredentials: true  // Send credentials (cookies)
+      });
+      const { role } = response.data;
+
+      setModalMessage('Login successful! Redirecting...');
+      setTimeout(() => {
+        setModalOpen(false);
+        if (role === 'hacker') {
+          navigate('/hacker');
+        } else if (role === 'staff') {
+          navigate('/staff');
+        }
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      setModalMessage(err.response?.data?.message || 'Login failed. Please try again.');
+      setTimeout(() => {
+        setModalOpen(false);
+      }, 2000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,6 +86,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <Modal isOpen={modalOpen} message={modalMessage} onClose={handleModalClose} />
     </div>
   );
 };

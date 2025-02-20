@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 
-// Example: Using localStorage to store user info.
-// In a real app, you might use context or a state management library.
 const ProtectedRoute = ({ children, requiredRole }) => {
-  // Retrieve user data from localStorage (or use context)
-  const user = JSON.parse(localStorage.getItem('user'));
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
+  const [userRole, setUserRole] = useState(null);
 
-  // If no user is found, redirect to the login page.
-  if (!user) {
+  useEffect(() => {
+    const verifyAuth = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/auth/verify', {
+          withCredentials: true, // send cookies with the request
+        });
+        // Expect response.data to be { authenticated: true, role: 'hacker' } or similar
+        if (response.data.authenticated) {
+          setIsAuthenticated(true);
+          setUserRole(response.data.role);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error('Auth verification error:', error);
+        setIsAuthenticated(false);
+      }
+    };
+
+    verifyAuth();
+  }, []);
+
+  // While waiting for the verification, show a loading indicator
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>;
+  }
+
+  // If not authenticated, redirect to the login page
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // If a specific role is required and the user role does not match, redirect.
-  if (requiredRole && user.role !== requiredRole) {
+  // If a specific role is required but doesn't match, redirect to unauthorized page
+  if (requiredRole && userRole !== requiredRole) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // Otherwise, render the protected component.
+  // User is authenticated (and authorized), so render the children
   return children;
 };
 
