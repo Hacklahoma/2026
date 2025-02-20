@@ -10,7 +10,11 @@ The Hacklahoma Website is the official online hub for the Hacklahoma 2026 event.
 - [Technologies and Libraries](#technologies-and-libraries)
 - [Plan of Work](#plan-of-work)
 - [Setup and Running Locally](#setup-and-running-locally)
+  - [Environment Configuration](#environment-configuration)
+  - [Installing and Running MongoDB](#installing-and-running-mongodb)
 - [Deployment Instructions](#deployment-instructions)
+- [Contribution Guidelines](#contribution-guidelines)
+- [License](#license)
 
 ## Overview
 
@@ -185,25 +189,34 @@ The project is divided into two primary parts:
    ```
 
 2. **Install Dependencies:**
-   - For the backend:
+   - **Backend:**
      ```bash
      cd backend
      npm install
      ```
-   - For the frontend:
+   - **Frontend:**
      ```bash
      cd ../frontend
      npm install
      ```
 
-3. **Configure Environment Variables:**  
-   In the backend directory, create a `.env` file with the following keys (adjust values as needed):
-   ```
-   MONGODB_URI=mongodb://localhost:27017/hacklahoma
-   JWT_SECRET=your_jwt_secret_here
-   PORT=5000
-   ```
-   Replace `your_jwt_secret_here` with a secure secret key.
+3. **Configure Environment Variables:**
+
+   **Backend:**
+   - In the `/backend` directory, create a `.env` file with the following keys (adjust values as needed):
+     ```
+     MONGODB_URI=mongodb://localhost:27017/hacklahoma
+     JWT_SECRET=your_jwt_secret_here
+     PORT=5000
+     ```
+     Replace `your_jwt_secret_here` with a secure secret key.
+
+   **Frontend:**
+   - In the `/frontend` directory, create a `.env` file with the following key:
+     ```
+     VITE_SERVER_PORT=5000
+     ```
+     Adjust the port if needed. (Vite exposes only variables prefixed with `VITE_` to the client.)
 
 4. **Install and Run MongoDB:**
 
@@ -306,10 +319,10 @@ The project is divided into two primary parts:
 ## Deployment Instructions
 
 - **Frontend Deployment:**  
-  You can deploy the frontend using services like Vercel or Netlify. Follow their documentation to connect your Git repository and configure build settings (typically `npm run build`).
+  Deploy the frontend using services like Vercel or Netlify. Follow their documentation to connect your Git repository and configure build settings (typically `npm run build`).
 
 - **Backend Deployment:**  
-  For the backend, consider deploying to Heroku, DigitalOcean, or another Node.js host. Be sure to set your environment variables in the production environment (such as `MONGODB_URI`, `JWT_SECRET`, and `PORT`).
+  Consider deploying the backend to Heroku, DigitalOcean, or another Node.js host. Ensure that your environment variables (e.g., `MONGODB_URI`, `JWT_SECRET`, and `PORT`) are set correctly in your production environment.
 
 - **Domain Configuration:**  
   Once deployed, register and configure your domain (`2026.hacklahoma.org`) with your DNS provider.
