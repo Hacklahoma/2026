@@ -1,0 +1,163 @@
+/* Make container fill the entire viewport */
+.staff-profile-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Section 1: Welcome - occupies 20% of viewport height */
+.welcome-section {
+    flex: 0 0 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.welcome-section h1 {
+    font-size: 2rem;
+    color: #2a9d8f;
+}
+
+/* Section 2: To Do - occupies 30% of viewport height */
+.todo-section {
+    flex: 0 0 20%;
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+}
+
+.todo-section h2 {
+    margin-top: 0;
+    color: #264653;
+}
+
+/* Bottom section: occupies the remaining 50% */
+.bottom-section {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+}
+
+/* Profile Picture section */
+.profile-picture {
+    flex: 1;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-picture h2 {
+    margin-top: 0;
+    color: #264653;
+}
+
+.profile-picture img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+.placeholder-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #2a9d8f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 0 auto;
+}
+
+/* Social Links section */
+.social-links {
+    flex: 2;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.social-links h2 {
+    margin-top: 0;
+    color: #264653;
+}
+
+.social-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Editable Social Link Fields */
+/* Editable Social Link Fields */
+.social-link-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.social-link-field label {
+    flex: 0 0 30%;
+    font-weight: bold;
+    margin-right: 8px;
+    color: #264653;
+}
+
+.social-link-field input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #acacac;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #000;
+    background-color: #e5e5e5;
+    box-sizing: border-box;
+}
+
+
+/* Style the update button */
+.social-links button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #2a9d8f;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.social-links button:hover {
+    background-color: #21867a;
+}
+
+/* Responsive adjustments: on mobile, stack bottom sections vertically */
+@media (max-width: 768px) {
+    .staff-profile-container {
+        height: auto;
+    }
+
+    .bottom-section {
+        flex-direction: column;
+    }
+}
