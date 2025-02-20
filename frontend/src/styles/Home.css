@@ -11,7 +11,7 @@
 /* Card styling: a modern white card with rounded corners and shadow */
 .home-card {
     display: flex;
-    width: 100%;
+    width: 80vw;
     max-width: 1200px;
     background: #fff;
     border-radius: 10px;

@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser'); // Import cookie-parser
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const hackerRoutes = require('./routes/hacker'); // Import hacker routes
+const staffRoutes = require('./routes/staff'); // Import staff routes
 require('dotenv').config();
 
 const app = express();
@@ -64,6 +65,12 @@ app.use('/api/hacker', (req, res, next) => {
   console.log(`[${new Date().toISOString()}] Hacker route accessed`);
   next();
 }, hackerRoutes);
+
+// Log when staff routes are accessed and delegate to staffRoutes
+app.use('/api/staff', (req, res, next) => {
+  console.log(`[${new Date().toISOString()}] Staff route accessed`);
+  next();
+}, staffRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -8,8 +8,14 @@ const userSchema = new mongoose.Schema({
   school:    { type: String },
   major:     { type: String },
   grade:     { type: String },
-  // Default role is "hacker"; can be changed later
   role:      { type: String, enum: ['hacker', 'staff'], default: 'hacker' },
+  profilePicture: { type: String, default: '' },
+  socialLinks: {
+    github:    { type: String, default: '' },
+    linkedin:  { type: String, default: '' },
+    discord:   { type: String, default: '' },
+    instagram: { type: String, default: '' }
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
