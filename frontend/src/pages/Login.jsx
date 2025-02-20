@@ -42,8 +42,12 @@ const Login = () => {
       setModalMessage('Login successful! Redirecting...');
       setTimeout(() => {
         setModalOpen(false);
-        // Redirect based on your app's logic; for now, we navigate to /hacker.
-        navigate('/hacker');
+        // Route based on the user's role returned from the server
+        if (response.data.role === 'staff') {
+          navigate('/staff');
+        } else {
+          navigate('/hacker');
+        }
       }, 1500);
     } catch (err) {
       console.error(err);

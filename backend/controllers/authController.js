@@ -91,3 +91,13 @@ exports.verify = (req, res) => {
     return res.status(401).json({ authenticated: false, message: 'Invalid token' });
   }
 };
+
+exports.logout = (req, res) => {
+  // Clear the token cookie
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false, // change to true in production (with HTTPS)
+    sameSite: 'lax'
+  });
+  return res.status(200).json({ message: 'Logged out successfully' });
+};

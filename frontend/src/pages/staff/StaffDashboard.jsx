@@ -9,6 +9,15 @@ const StaffDashboard = () => {
         <ul>
           <li>
             <NavLink 
+              to="/" 
+              className={({ isActive }) => isActive ? 'active' : ''}
+            >
+              <span className="icon">🏠</span>
+              <span className="tooltip">Home</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink 
               to="/staff/profile" 
               className={({ isActive }) => isActive ? 'active' : ''}
             >

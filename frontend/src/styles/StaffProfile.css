@@ -7,21 +7,31 @@
     box-sizing: border-box;
 }
 
-/* Section 1: Welcome - occupies 20% of viewport height */
+/* Section 1: Welcome - occupies 10% of viewport height */
 .welcome-section {
-    flex: 0 0 10%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: space-between;
+    text-align: left;
+    flex: 0 0 10%;
 }
 
-.welcome-section h1 {
+/* Style for the welcome text */
+.welcome-text h1 {
     font-size: 2rem;
     color: #2a9d8f;
+    margin: 0;
 }
 
-/* Section 2: To Do - occupies 30% of viewport height */
+/* Logout button container */
+.logout-button button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+/* Section 2: To Do - occupies 20% of viewport height */
 .todo-section {
     flex: 0 0 20%;
     background-color: #f7f7f7;
@@ -106,7 +116,6 @@
 }
 
 /* Editable Social Link Fields */
-/* Editable Social Link Fields */
 .social-link-field {
     display: flex;
     align-items: center;
@@ -132,7 +141,6 @@
     background-color: #e5e5e5;
     box-sizing: border-box;
 }
-
 
 /* Style the update button */
 .social-links button {

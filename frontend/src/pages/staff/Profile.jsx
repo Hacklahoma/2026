@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/StaffProfile.css';
 
 const Profile = () => {
@@ -12,6 +13,7 @@ const Profile = () => {
     instagram: ''
   });
   const [updating, setUpdating] = useState(false);
+  const navigate = useNavigate();
 
   // Read the server port from environment variables; default to 5000 if not set
   const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
@@ -62,6 +64,17 @@ const Profile = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      // Call the logout endpoint to clear the HTTP-only cookie
+      await axios.post(`${baseURL}/api/auth/logout`, {}, { withCredentials: true });
+    } catch (error) {
+      console.error('Error logging out:', error);
+    } finally {
+      navigate('/login');
+    }
+  };
+
   if (loading) {
     return (
       <div className="staff-profile-container">
@@ -80,9 +93,16 @@ const Profile = () => {
 
   return (
     <div className="staff-profile-container">
-      {/* Section 1: Welcome */}
+      {/* Section 1: Welcome with Logout Button */}
       <div className="welcome-section">
-        <h1>Welcome, {profile.firstName} {profile.lastName}</h1>
+        <div className="welcome-text">
+          <h1>Welcome, {profile.firstName} {profile.lastName}</h1>
+        </div>
+        <div className="logout-button">
+          <button onClick={handleLogout}>
+            <span className="logout-icon">🚪</span>
+          </button>
+        </div>
       </div>
       
       {/* Section 2: Todo */}
