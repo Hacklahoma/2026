@@ -9,9 +9,8 @@ The Hacklahoma Website is the official online hub for the Hacklahoma 2026 event.
 - [File Structure](#file-structure)
 - [Technologies and Libraries](#technologies-and-libraries)
 - [Plan of Work](#plan-of-work)
-- [Setup and Deployment](#setup-and-deployment)
-- [Contribution Guidelines](#contribution-guidelines)
-- [License](#license)
+- [Setup and Running Locally](#setup-and-running-locally)
+- [Deployment Instructions](#deployment-instructions)
 
 ## Overview
 
@@ -25,7 +24,7 @@ The website will serve as a comprehensive platform for Hacklahoma 2026, featurin
 - **Staff Section:**  
   - Accessible only to pre-approved staff accounts.
   - Offers a modular dashboard with dedicated views for Profile, Operations, Sponsoring, Tech, Marketing, and Exec teams.
-  - Each team page includes a top navbar listing its subviews (e.g. for Exec: Home and Team Management; for Operations: Home and Schedule, etc.) and uses nested routes to render the correct subview.
+  - Each team page includes a top navbar listing its subviews (e.g., for Exec: Home and Team Management; for Operations: Home and Schedule, etc.) and uses nested routes to render the correct subview.
 
 The project is divided into two primary parts:
 - **Frontend:** Built as a React Vite project with fully responsive, full-screen designs. Registration and Login pages have been implemented with modern, dynamic, and scrollable mobile layouts. Staff pages use nested routing to render team subviews.
@@ -177,7 +176,7 @@ The project is divided into two primary parts:
   - Register and configure the domain (`2026.hacklahoma.org`).
   - Finalize documentation and complete the launch checklist.
 
-## Setup and Deployment
+## Setup and Running Locally
 
 1. **Clone the Repository:**
    ```bash
@@ -206,7 +205,73 @@ The project is divided into two primary parts:
    ```
    Replace `your_jwt_secret_here` with a secure secret key.
 
-4. **Running Locally:**
+4. **Install and Run MongoDB:**
+
+   ### On Windows:
+   - **Download and Install MongoDB Community Edition:**
+     - Visit the [MongoDB Community Download Center](https://www.mongodb.com/try/download/community).
+     - Select Windows and download the MSI installer.
+     - Run the installer and follow the prompts. Choose to install MongoDB as a Service.
+   - **Verify Installation:**
+     - Open Command Prompt.
+     - Run:
+       ```bash
+       mongod --version
+       ```
+     - If not recognized, add MongoDB's bin directory (e.g., `C:\Program Files\MongoDB\Server\<version>\bin`) to your PATH.
+   - **Start MongoDB:**
+     - Open an elevated Command Prompt (Run as Administrator) and run:
+       ```bash
+       net start MongoDB
+       ```
+   - **Access MongoShell:**
+     - In Command Prompt, run:
+       ```bash
+       mongosh
+       ```
+   - **Create a Test Database:**
+     - In MongoShell:
+       ```javascript
+       use hacklahoma
+       db.users.insertOne({ firstName: "Test", lastName: "User", email: "test@example.com" });
+       db.users.find().pretty()
+       ```
+
+   ### On macOS:
+   - **Install Homebrew (if not already installed):**
+     - Open Terminal and run:
+       ```bash
+       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+       ```
+   - **Install MongoDB Community Edition:**
+     ```bash
+     brew tap mongodb/brew
+     brew install mongodb-community
+     ```
+   - **Start MongoDB as a Service:**
+     ```bash
+     brew services start mongodb-community
+     ```
+   - **Verify MongoDB is Running:**
+     - Run:
+       ```bash
+       brew services list
+       ```
+     - You should see `mongodb-community` as "started."
+   - **Access MongoShell:**
+     - In Terminal, run:
+       ```bash
+       mongosh
+       ```
+   - **Create a Test Database:**
+     - In the MongoShell:
+       ```javascript
+       use hacklahoma
+       db.users.insertOne({ firstName: "Test", lastName: "User", email: "test@example.com" });
+       db.users.find().pretty()
+       ```
+
+5. **Run the Application Locally:**
 
    **On Windows:**
    - **Backend:**  
@@ -215,7 +280,7 @@ The project is divided into two primary parts:
      cd backend
      npm run dev
      ```
-     (Alternatively, use `nodemon server.js` if you have nodemon installed.)
+     (Alternatively, use `nodemon server.js` if installed.)
    - **Frontend:**  
      Open a separate Command Prompt or PowerShell and run:
      ```bash
@@ -238,8 +303,13 @@ The project is divided into two primary parts:
      npm run dev
      ```
 
-5. **Deployment:**
-   - Follow the guidelines of your chosen hosting provider for deployment.
-   - For the frontend, you can use services like Vercel or Netlify.
-   - For the backend, consider Heroku, DigitalOcean, or another Node.js host.
-   - Make sure to update environment variables in your production environment.
+## Deployment Instructions
+
+- **Frontend Deployment:**  
+  You can deploy the frontend using services like Vercel or Netlify. Follow their documentation to connect your Git repository and configure build settings (typically `npm run build`).
+
+- **Backend Deployment:**  
+  For the backend, consider deploying to Heroku, DigitalOcean, or another Node.js host. Be sure to set your environment variables in the production environment (such as `MONGODB_URI`, `JWT_SECRET`, and `PORT`).
+
+- **Domain Configuration:**  
+  Once deployed, register and configure your domain (`2026.hacklahoma.org`) with your DNS provider.
