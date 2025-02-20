@@ -7,12 +7,11 @@ import '../styles/Register.css';
 const Register = () => {
   const [formData, setFormData] = useState({
     firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
     school: '',
     major: '',
     grade: '',
+    email: '',
+    password: '',
     agreeRules: false,
     agreeCode: false,
   });
@@ -38,11 +37,10 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     setModalOpen(true);
-    setModalMessage('Please wait, registering user...');
+    setModalMessage('Registering user, please wait...');
     
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
-      // On success, display a success message and redirect to login page.
+      await axios.post('http://localhost:5000/api/auth/register', formData);
       setModalMessage('Registration successful! Redirecting to login...');
       setTimeout(() => {
         setModalOpen(false);
@@ -62,38 +60,33 @@ const Register = () => {
   return (
     <div className="register-container">
       <div className="card">
+        <h1 className="register-header">Create Your Account</h1>
+        <div className="login-redirect-header">
+          <span>Already have an account? </span>
+          <button className="login-btn" onClick={() => navigate('/login')}>Login</button>
+        </div>
         <form onSubmit={handleSubmit} className="card-form">
-          <div className="card-half card-left">
-            <h2 className="card-title">Register</h2>
-            <label>First Name</label>
-            <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+          <div className="form-half student-info">
+            <h2>Student Info</h2>
+            <label htmlFor="firstName">Name</label>
+            <input id="firstName" type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
 
-            <label>Last Name</label>
-            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+            <label htmlFor="school">School</label>
+            <input id="school" type="text" name="school" value={formData.school} onChange={handleChange} required />
 
-            <label>Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            <label htmlFor="major">Major</label>
+            <input id="major" type="text" name="major" value={formData.major} onChange={handleChange} required />
 
-            <label>Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-
-            <div className="divider">OR</div>
-
-            <div className="social-buttons">
-              <button type="button" className="btn github">Register with Github</button>
-              <button type="button" className="btn google">Register with Google</button>
-            </div>
+            <label htmlFor="grade">Grade</label>
+            <input id="grade" type="text" name="grade" value={formData.grade} onChange={handleChange} required />
           </div>
-          <div className="card-half card-right">
-            <h2 className="card-title">Additional Info</h2>
-            <label>School</label>
-            <input type="text" name="school" value={formData.school} onChange={handleChange} required />
+          <div className="form-half required-info">
+            <h2>Required Info</h2>
+            <label htmlFor="email">Email</label>
+            <input id="email" type="email" name="email" value={formData.email} onChange={handleChange} required />
 
-            <label>Major</label>
-            <input type="text" name="major" value={formData.major} onChange={handleChange} required />
-
-            <label>Grade</label>
-            <input type="text" name="grade" value={formData.grade} onChange={handleChange} required />
+            <label htmlFor="password">Password</label>
+            <input id="password" type="password" name="password" value={formData.password} onChange={handleChange} required />
 
             <div className="checkbox-group">
               <label>
@@ -101,15 +94,13 @@ const Register = () => {
                 I agree to the rules
               </label>
             </div>
-
             <div className="checkbox-group">
               <label>
                 <input type="checkbox" name="agreeCode" checked={formData.agreeCode} onChange={handleChange} required />
                 I agree to the code of conduct
               </label>
             </div>
-
-            <button type="submit" className="btn submit-btn">Register</button>
+            <button type="submit" className="submit-btn" disabled={loading}>Register</button>
           </div>
         </form>
       </div>

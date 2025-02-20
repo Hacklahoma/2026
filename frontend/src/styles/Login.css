@@ -1,95 +1,130 @@
-/* Container centers the card in the viewport */
-.login-container {
+
+  
+  /* Full-screen container */
+  .login-container {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #eaf4f8, #ffffff);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* For mobile, allow vertical scrolling if needed */
+  @media (max-width: 768px) {
+    .login-container {
+      height: auto;
+      overflow-y: auto;
+    }
+  }
+  
+  /* Card styling: centered, dynamic width */
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+
+    /* Darker Box shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Header for the card */
+  .login-header {
+    font-size: 2rem;
+    color: #2a9d8f;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Form content */
+  .form-content {
+    width: 100%;
+  }
+  
+  /* Form groups */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #264653;
+  }
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Form actions container: inline layout */
+  .form-actions {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f2f2f2;
-
-    width: 100vw;
-}
-
-/* Card styling */
-.card {
-    background-color: #fff;
-    width: 400px;
-    max-width: 90%;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* Form sections */
-.login-top,
-.login-bottom {
-    margin-bottom: 20px;
-}
-
-/* Divider */
-.divider {
-    text-align: center;
-    margin: 10px 0;
-    font-weight: bold;
-    color: #888;
-}
-
-/* Titles */
-.card-title {
-    font-size: 1.75rem;
-    margin-bottom: 16px;
-    color: #333;
-}
-
-/* Input styling */
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 6px 0 16px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Labels */
-label {
-    font-weight: bold;
-    color: #555;
-}
-
-/* Button styling */
-.btn {
-    display: inline-block;
-    width: 100%;
-    padding: 10px 16px;
+    margin-top: 20px;
+    gap: 40px;
+  }
+  
+  /* Submit button styling */
+  .submit-btn {
+    padding: 12px 20px;
     font-size: 1rem;
     color: #fff;
+    background-color: #2a9d8f;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 10px;
     transition: background-color 0.3s ease;
-}
-
-.submit-btn {
-    background-color: #007bff;
-}
-
-.submit-btn:hover {
-    background-color: #0056b3;
-}
-
-.github {
-    background-color: #333;
-}
-
-.github:hover {
-    background-color: #555;
-}
-
-.google {
-    background-color: #db4437;
-}
-
-.google:hover {
-    background-color: #c33d2e;
-}
+  }
+  .submit-btn:hover {
+    background-color: #21867a;
+  }
+  
+  /* Inline redirect styling */
+  .redirect-inline {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .redirect-inline span {
+    font-size: 1rem;
+    color: #264653;
+  }
+  .register-btn {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    background-color: #264653;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .register-btn:hover {
+    background-color: #1f3d4b;
+  }
+  
+  /* Responsive adjustments for desktop */
+  @media (min-width: 769px) {
+    .card {
+      width: 90vw;
+      max-width: 600px;
+    }
+  }
+  
+  /* For mobile, adjust card width */
+  @media (max-width: 768px) {
+    .card {
+      width: 90vw;
+    }
+  }
+  

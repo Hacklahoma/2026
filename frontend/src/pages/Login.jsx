@@ -5,7 +5,10 @@ import Modal from '../components/Modal';
 import '../styles/Login.css';
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -25,26 +28,24 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setModalOpen(true);
-    setModalMessage('Please wait, logging in...');
-    
+    setModalMessage('Logging in, please wait...');
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData, {
-        withCredentials: true  // Send credentials (cookies)
-      });
-      const { role } = response.data;
-
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/login',
+        formData,
+        { withCredentials: true }
+      );
       setModalMessage('Login successful! Redirecting...');
       setTimeout(() => {
         setModalOpen(false);
-        if (role === 'hacker') {
-          navigate('/hacker');
-        } else if (role === 'staff') {
-          navigate('/staff');
-        }
+        // Redirect based on your app's logic; for now, we navigate to /hacker.
+        navigate('/hacker');
       }, 1500);
     } catch (err) {
       console.error(err);
-      setModalMessage(err.response?.data?.message || 'Login failed. Please try again.');
+      setModalMessage(
+        err.response?.data?.message || 'Login failed. Please try again.'
+      );
       setTimeout(() => {
         setModalOpen(false);
       }, 2000);
@@ -56,37 +57,55 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="card">
-        <form onSubmit={handleSubmit}>
-          <div className="login-top">
-            <h2 className="card-title">Login</h2>
-            <label>Email</label>
+        <h1 className="login-header">Login</h1>
+        <form onSubmit={handleSubmit} className="form-content">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
             />
-
-            <label>Password</label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
             <input
+              id="password"
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
             />
-
-            <button type="submit" className="btn submit-btn">Login</button>
           </div>
-          <div className="divider">OR</div>
-          <div className="login-bottom">
-            <button type="button" className="btn github">Login with Github</button>
-            <button type="button" className="btn google">Login with Google</button>
+          <div className="form-actions">
+            
+            <div className="redirect-inline">
+              <span>Don't have an account?</span>
+              <button
+                type="button"
+                className="register-btn"
+                onClick={() => navigate('/register')}
+              >
+                Register
+              </button>
+            </div>
+
+            <button type="submit" className="submit-btn" disabled={loading}>
+              Login
+            </button>
+            
           </div>
         </form>
       </div>
-      <Modal isOpen={modalOpen} message={modalMessage} onClose={handleModalClose} />
+      <Modal
+        isOpen={modalOpen}
+        message={modalMessage}
+        onClose={handleModalClose}
+      />
     </div>
   );
 };

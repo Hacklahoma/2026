@@ -1,120 +1,145 @@
-/* Container centers the card in the viewport */
+/* Full-screen container */
 .register-container {
     display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #eaf4f8, #ffffff);
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f2f2f2;
-
-    width: 100vw;
-}
-
-/* Card styling */
-.card {
-    background-color: #fff;
-    width: 800px;
-    max-width: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-/* Form layout in the card: two equal halves */
-.card-form {
+  }
+  
+  /* For mobile devices, allow vertical scrolling */
+  @media (max-width: 768px) {
+    .register-container {
+      height: auto;
+      overflow-y: auto;
+    }
+  }
+  
+  /* Registration card centered on the screen */
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-}
-
-.card-half {
-    flex: 1;
-    padding: 24px;
-}
-
-/* Border between left and right halves */
-.card-left {
-    border-right: 1px solid #e0e0e0;
-}
-
-/* Titles */
-.card-title {
-    font-size: 1.75rem;
-    margin-bottom: 16px;
-    color: #333;
-}
-
-/* Input styling */
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Header for the card */
+  .register-header {
+    font-size: 2rem;
+    color: #2a9d8f;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Login redirect header placed under the main header */
+  .login-redirect-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #264653;
+  }
+  .login-redirect-header .login-btn {
+    margin-left: 8px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    background-color: #264653;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .login-redirect-header .login-btn:hover {
+    background-color: #1f3d4b;
+  }
+  
+  /* Form container: two columns on desktop */
+  .card-form {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  /* Each half (columns) styling */
+  .form-half {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* On desktop, set each half to 40% of viewport width; on mobile, 90% */
+  @media (min-width: 769px) {
+    .card {
+      width: 90vw;
+      max-width: 1000px;
+    }
+    .form-half {
+      flex: 0 0 48%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      width: 90vw;
+    }
+    .card-form {
+      flex-direction: column;
+    }
+    .form-half {
+      width: 100%;
+    }
+  }
+  
+  /* Section headings */
+  .form-half h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: #264653;
+  }
+  
+  /* Labels */
+  label {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #264653;
+  }
+  
+  /* Input fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
     width: 100%;
     padding: 10px;
-    margin: 6px 0 16px 0;
+    margin-bottom: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-/* Labels */
-label {
-    font-weight: bold;
-    color: #555;
-}
-
-/* Divider between form sections */
-.divider {
-    text-align: center;
-    margin: 20px 0;
-    font-weight: bold;
-    color: #888;
-}
-
-/* Social button container */
-.social-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-/* Button styling */
-.btn {
-    display: inline-block;
-    padding: 10px 16px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Checkbox group */
+  .checkbox-group {
+    margin-bottom: 12px;
+    color: #264653;
+  }
+  
+  /* Submit button inside required info section */
+  .submit-btn {
+    padding: 12px 20px;
     font-size: 1rem;
     color: #fff;
+    background-color: #2a9d8f;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.github {
-    background-color: #333;
-}
-
-.github:hover {
-    background-color: #555;
-}
-
-.google {
-    background-color: #db4437;
-}
-
-.google:hover {
-    background-color: #c33d2e;
-}
-
-/* Submit button spanning full width */
-.submit-btn {
-    width: 100%;
-    background-color: #007bff;
-    margin-top: 20px;
-}
-
-.submit-btn:hover {
-    background-color: #0056b3;
-}
-
-/* Checkbox group styling */
-.checkbox-group {
-    margin-bottom: 12px;
-    font-size: 0.95rem;
-    color: #555;
-}
+    margin-top: 10px;
+  }
+  .submit-btn:hover {
+    background-color: #21867a;
+  }
+  
