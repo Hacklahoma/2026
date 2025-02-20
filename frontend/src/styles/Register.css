@@ -1,145 +1,156 @@
 /* Full-screen container */
 .register-container {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #eaf4f8, #ffffff);
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #eaf4f8, #ffffff);
+  width: 100vw;
+  height: 100vh;
+}
+
+/* For mobile devices, allow vertical scrolling */
+@media (max-width: 768px) {
+  .register-container {
+    height: auto;
+    overflow-y: auto;
   }
-  
-  /* For mobile devices, allow vertical scrolling */
-  @media (max-width: 768px) {
-    .register-container {
-      height: auto;
-      overflow-y: auto;
-    }
-  }
-  
-  /* Registration card centered on the screen */
+}
+
+/* Registration card styling */
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header for the card */
+.register-header {
+  font-size: 2rem;
+  color: #2a9d8f;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Login redirect header */
+.login-redirect-header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #264653;
+}
+.login-redirect-header .login-btn {
+  margin-left: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  background-color: #264653;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.login-redirect-header .login-btn:hover {
+  background-color: #1f3d4b;
+}
+
+/* Form container: two columns on desktop */
+.card-form {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Each half (columns) styling */
+.form-half {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Name fields container: display side by side */
+.name-fields {
+display: flex;
+gap: 10px;
+margin-bottom: 12px;
+}
+
+/* Each name input group */
+.name-fields .input-group {
+flex: 1;
+}
+
+/* On desktop, set each half to 48% of the card width; on mobile, 100% */
+@media (min-width: 769px) {
   .card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 90vw;
+    max-width: 1000px;
   }
-  
-  /* Header for the card */
-  .register-header {
-    font-size: 2rem;
-    color: #2a9d8f;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  /* Login redirect header placed under the main header */
-  .login-redirect-header {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    color: #264653;
-  }
-  .login-redirect-header .login-btn {
-    margin-left: 8px;
-    padding: 6px 10px;
-    font-size: 0.9rem;
-    background-color: #264653;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .login-redirect-header .login-btn:hover {
-    background-color: #1f3d4b;
-  }
-  
-  /* Form container: two columns on desktop */
-  .card-form {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  /* Each half (columns) styling */
   .form-half {
-    display: flex;
+    flex: 0 0 48%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90vw;
+  }
+  .card-form {
     flex-direction: column;
   }
-  
-  /* On desktop, set each half to 40% of viewport width; on mobile, 90% */
-  @media (min-width: 769px) {
-    .card {
-      width: 90vw;
-      max-width: 1000px;
-    }
-    .form-half {
-      flex: 0 0 48%;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .card {
-      width: 90vw;
-    }
-    .card-form {
-      flex-direction: column;
-    }
-    .form-half {
-      width: 100%;
-    }
-  }
-  
-  /* Section headings */
-  .form-half h2 {
-    font-size: 1.5rem;
-    margin-bottom: 12px;
-    color: #264653;
-  }
-  
-  /* Labels */
-  label {
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: #264653;
-  }
-  
-  /* Input fields */
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
+  .form-half {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
   }
-  
-  /* Checkbox group */
-  .checkbox-group {
-    margin-bottom: 12px;
-    color: #264653;
-  }
-  
-  /* Submit button inside required info section */
-  .submit-btn {
-    padding: 12px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #2a9d8f;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-  }
-  .submit-btn:hover {
-    background-color: #21867a;
-  }
-  
+}
+
+/* Section headings */
+.form-half h2 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: #264653;
+}
+
+/* Labels */
+label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #264653;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Checkbox group */
+.checkbox-group {
+  margin-bottom: 12px;
+  color: #264653;
+}
+
+/* Submit button */
+.submit-btn {
+  padding: 12px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #2a9d8f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+.submit-btn:hover {
+  background-color: #21867a;
+}

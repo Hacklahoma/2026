@@ -5,10 +5,13 @@ import '../styles/Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
+  // Get the server port from environment variables. Default to 5000 if not defined.
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
+  const baseURL = `http://localhost:${serverPort}`;
 
   const handleEnterPortal = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/verify', {
+      const response = await axios.get(`${baseURL}/api/auth/verify`, {
         withCredentials: true,
       });
       if (response.data.authenticated) {

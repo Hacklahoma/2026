@@ -6,10 +6,13 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
   const [userRole, setUserRole] = useState(null);
 
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
+  const baseURL = `http://localhost:${serverPort}`;
+
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/verify', {
+        const response = await axios.get(`${baseURL}/api/auth/verify`, {
           withCredentials: true, // send cookies with the request
         });
         // Expect response.data to be { authenticated: true, role: 'hacker' } or similar
@@ -26,7 +29,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     };
 
     verifyAuth();
-  }, []);
+  }, [baseURL]);
 
   // While waiting for the verification, show a loading indicator
   if (isAuthenticated === null) {

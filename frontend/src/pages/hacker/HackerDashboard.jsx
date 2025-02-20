@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../styles/HackerDashboard.css'; // Ensure this path matches your project structure
+import '../../styles/HackerDashboard.css';
 
 const HackerDashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Build the base URL using the environment variable. Default to 5000 if not set.
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
+  const baseURL = `http://localhost:${serverPort}`;
+
   // Fetch user data from the backend
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/hacker/profile', {
+        const response = await axios.get(`${baseURL}/api/hacker/profile`, {
           withCredentials: true, // Ensure the auth cookie is sent
         });
         setUser(response.data);
@@ -22,7 +26,7 @@ const HackerDashboard = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [baseURL]);
 
   if (loading) {
     return <div className="dashboard-container"><p>Loading user data...</p></div>;

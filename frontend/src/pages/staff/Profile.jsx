@@ -13,10 +13,14 @@ const Profile = () => {
   });
   const [updating, setUpdating] = useState(false);
 
+  // Read the server port from environment variables; default to 5000 if not set
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
+  const baseURL = `http://localhost:${serverPort}`;
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/staff/profile', {
+        const response = await axios.get(`${baseURL}/api/staff/profile`, {
           withCredentials: true,
         });
         setProfile(response.data);
@@ -34,7 +38,7 @@ const Profile = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [baseURL]);
 
   const handleSocialChange = (e) => {
     setSocialLinks({ ...socialLinks, [e.target.name]: e.target.value });
@@ -44,7 +48,7 @@ const Profile = () => {
     setUpdating(true);
     try {
       const response = await axios.put(
-        'http://localhost:5000/api/staff/profile/socialLinks',
+        `${baseURL}/api/staff/profile/socialLinks`,
         { socialLinks },
         { withCredentials: true }
       );

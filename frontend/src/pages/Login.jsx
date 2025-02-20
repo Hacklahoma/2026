@@ -14,6 +14,10 @@ const Login = () => {
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
+  // Build the base URL using the environment variable. Default to 5000 if not set.
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
+  const baseURL = `http://localhost:${serverPort}`;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -31,7 +35,7 @@ const Login = () => {
     setModalMessage('Logging in, please wait...');
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        `${baseURL}/api/auth/login`,
         formData,
         { withCredentials: true }
       );
@@ -82,7 +86,6 @@ const Login = () => {
             />
           </div>
           <div className="form-actions">
-            
             <div className="redirect-inline">
               <span>Don't have an account?</span>
               <button
@@ -93,11 +96,9 @@ const Login = () => {
                 Register
               </button>
             </div>
-
             <button type="submit" className="submit-btn" disabled={loading}>
               Login
             </button>
-            
           </div>
         </form>
       </div>
