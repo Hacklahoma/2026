@@ -1,0 +1,39 @@
+.team-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.team-navbar {
+    display: flex;
+    background-color: #2a9d8f;
+    padding: 10px;
+    gap: 20px;
+    justify-content: center;
+}
+
+.team-navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.team-navbar a:hover {
+    background-color: #21867a;
+}
+
+.team-navbar a.active {
+    background-color: #1f3d4b;
+}
+
+.team-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f7f7f7;
+}

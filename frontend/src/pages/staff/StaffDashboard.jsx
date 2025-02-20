@@ -2,13 +2,6 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import '../../styles/StaffDashboard.css';
 
-import ProfileView from './Profile';
-import OperationsView from './Operations';
-import SponsoringView from './Sponsoring';
-import TechView from './Tech';
-import MarketingView from './Marketing';
-import ExecView from './Exec';
-
 const StaffDashboard = () => {
   return (
     <div className="staff-dashboard-container">
