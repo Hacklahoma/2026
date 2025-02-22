@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
@@ -14,11 +14,26 @@ const HackerDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
 
   // Build the base URL using the environment variable. Default to 5000 if not set.
   const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
   const baseURL = `http://localhost:${serverPort}`;
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -96,9 +111,26 @@ const HackerDashboard = () => {
         <div className="left-panel">
           <header className="dashboard-header">
             <h1 className="user-name">{user.firstName} {user.lastName}</h1>
-            <button className="logout-button" onClick={handleLogout}>
-              <span className="logout-icon">🚪</span>
-            </button>
+            <div ref={menuRef}>
+              <button 
+                className="menu-button" 
+                onClick={() => setMenuOpen(prev => !prev)}
+              >
+                ☰
+              </button>
+              {menuOpen && (
+                <div className="dropdown-menu">
+                  <ul>
+                    <li onClick={() => { setMenuOpen(false); navigate('/settings'); }}>
+                      Settings
+                    </li>
+                    <li onClick={() => { setMenuOpen(false); handleLogout(); }}>
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </header>
           <div className="profile-picture-container">
             {user.profilePicture ? (

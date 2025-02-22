@@ -39,6 +39,8 @@ import ExecPage from './pages/staff/exec/ExecPage';
 import ExecHome from './pages/staff/exec/ExecHome';
 import ExecTeamManagement from './pages/staff/exec/ExecTeamManagement';
 
+import Settings from './pages/hacker/Settings';
+
 function App() {
   return (
     <Router>
@@ -112,6 +114,8 @@ function App() {
 
         {/* Unauthorized */}
         <Route path="/unauthorized" element={<div>Access Denied</div>} />
+
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );

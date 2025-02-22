@@ -1,0 +1,142 @@
+.settings-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.settings-content {
+  width: 100%;
+  min-width: 300px; /* Minimum width */
+  max-width: 50%; /* Use percentage instead of fixed pixels */
+  height: 100%;
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-card {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.settings-card h1 {
+  font-size: 2.5rem;
+  color: #2a9d8f;
+  margin: 0 0 20px 0;
+  text-align: left;
+}
+
+.settings-section {
+  flex: 1;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .settings-content {
+    max-width: 100%; /* Allow full width on mobile */
+    padding: 15px;
+    height: auto;
+  }
+  
+  .settings-card {
+    padding: 20px;
+  }
+  
+  .settings-card h1 {
+    font-size: 2rem;
+  }
+}
+
+.profile-picture-section {
+  margin-bottom: 20px;
+}
+
+.profile-picture-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-picture-header h2 {
+  color: #264653;
+  margin: 0;
+}
+
+.profile-picture-header button {
+  padding: 8px 12px;
+  background-color: #d1d1d1;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.upload-options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.upload-options button {
+  flex: 1;
+  padding: 10px;
+  background-color: #264653;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.profile-picture-display {
+  width: 150px;
+  height: 150px;
+  margin: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.profile-picture-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #264653;
+  background-color: #e9ecef;
+}
+
+.success { color: #2a9d8f; }
+.error { color: #e76f51; } 
