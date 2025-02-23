@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/Settings.css';
 
 const Settings = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [showUploadOptions, setShowUploadOptions] = useState(false);
   const [status, setStatus] = useState('');
@@ -90,7 +92,15 @@ const Settings = () => {
     <div className="settings-container">
       <div className="settings-content">
         <div className="settings-card">
-          <h1>Settings</h1>
+          <div className="settings-header">
+            <h1>Settings</h1>
+            <button 
+              className="back-button"
+              onClick={() => navigate('/hacker')}
+            >
+              Back
+            </button>
+          </div>
           <div className="settings-section">
             <div className="profile-picture-section">
               <div className="profile-picture-header">

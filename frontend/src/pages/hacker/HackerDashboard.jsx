@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
+import sunIcon from '../../assets/icons/sun_icon.png';
+import moonIcon from '../../assets/icons/moon_icon.png';
 import '../../styles/HackerDashboard.css';
 
 const HackerDashboard = () => {
@@ -17,6 +19,10 @@ const HackerDashboard = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('darkMode');
+    return savedTheme === 'true';
+  });
 
   // Build the base URL using the environment variable. Default to 5000 if not set.
   const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
@@ -58,6 +64,15 @@ const HackerDashboard = () => {
     fetchUserData();
   }, [baseURL]);
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+    localStorage.setItem('darkMode', isDarkMode);
+  }, [isDarkMode]);
+
   const handleSocialChange = (e) => {
     setSocialLinks({ ...socialLinks, [e.target.name]: e.target.value });
   };
@@ -90,6 +105,10 @@ const HackerDashboard = () => {
     }
   };
 
+  const handleThemeToggle = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
+
   if (loading) {
     return <div className="dashboard-container"><p>Loading user data...</p></div>;
   }
@@ -105,15 +124,17 @@ const HackerDashboard = () => {
   });
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container hacker-dashboard">
       <div className="dashboard-content">
         {/* Left Panel: User Info */}
         <div className="left-panel">
           <header className="dashboard-header">
-            <h1 className="user-name">{user.firstName} {user.lastName}</h1>
+            <h1 className="user-name">
+              <span>{user.firstName} {user.lastName}</span>
+            </h1>
             <div ref={menuRef}>
               <button 
-                className="menu-button" 
+                className="hacker-dashboard menu-button" 
                 onClick={() => setMenuOpen(prev => !prev)}
               >
                 ☰
@@ -123,6 +144,14 @@ const HackerDashboard = () => {
                   <ul>
                     <li onClick={() => { setMenuOpen(false); navigate('/settings'); }}>
                       Settings
+                    </li>
+                    <li onClick={() => { setMenuOpen(false); handleThemeToggle(); }} className="theme-toggle">
+                      <img 
+                        src={isDarkMode ? sunIcon : moonIcon} 
+                        alt={isDarkMode ? "Light Mode" : "Dark Mode"} 
+                        className="theme-icon"
+                      />
+                      {isDarkMode ? 'Light Mode' : 'Dark Mode'}
                     </li>
                     <li onClick={() => { setMenuOpen(false); handleLogout(); }}>
                       Logout

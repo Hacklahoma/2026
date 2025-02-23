@@ -169,8 +169,8 @@ const Register = () => {
                 I agree to the code of conduct
               </label>
             </div>
-            <button type="submit" className="submit-btn" disabled={loading}>
-              Register
+            <button type="submit" className="button inverse" disabled={loading}>
+              REGISTER
             </button>
           </div>
         </form>

@@ -1,0 +1,135 @@
+/* Light mode (default) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #264653;
+  --card-background: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --primary-color: #2a9d8f;
+  --primary-hover: #21867a;
+  --border-color: #ccc;
+}
+
+/* Dark mode */
+body.dark-mode {
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --card-background: #2d2d2d;
+  --card-shadow: rgba(255, 255, 255, 0.1);
+  --primary-color: #4fd1c5;
+  --primary-hover: #3db1a5;
+  --border-color: #404040;
+}
+
+/* Base styles */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Remove from index.css and move here */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }
+}
+
+/* Smooth transitions for theme changes */
+body, button, input, .card, .dropdown-menu {
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Dashboard styles */
+body.dark-mode .dashboard-container {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .left-panel,
+body.dark-mode .right-panel {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Settings page styles */
+body.dark-mode .settings-container {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .settings-card {
+  background-color: #2d2d2d;
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .settings-card h1 {
+  color: #4fd1c5;
+}
+
+body.dark-mode .profile-picture-header h2 {
+  color: #ffffff;
+}
+
+body.dark-mode .profile-picture-header button {
+  background-color: #bcbcbc;
+  color: #ffffff;
+}
+
+body.dark-mode .upload-options button {
+  background-color: #4fd1c5;
+  color: #1a1a1a;
+}
+
+/* Shared styles */
+body.dark-mode .user-name,
+body.dark-mode .form-title {
+  color: #4fd1c5;
+}
+
+body.dark-mode .user-email {
+  color: #ffffff;
+}
+
+body.dark-mode .social-link-field input {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border-color: #404040;
+}
+
+body.dark-mode .dropdown-menu {
+  background-color: #2d2d2d;
+  border-color: #404040;
+}
+
+body.dark-mode .dropdown-menu li {
+  color: #ffffff;
+}
+
+body.dark-mode .menu-button {
+  color: #ffffff;
+}
+
+/* Smooth transitions */
+.dashboard-container, .left-panel, .right-panel, 
+.user-name, .form-title, .user-email, .social-link-field input,
+.dropdown-menu, .dropdown-menu li, .menu-button,
+.settings-container, .settings-card, .settings-card h1,
+.profile-picture-header h2, .profile-picture-header button,
+.upload-options button {
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Add these styles */
+.theme-toggle {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}

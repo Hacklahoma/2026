@@ -53,8 +53,14 @@
 
 .user-name {
   font-size: 2.5rem;
-  color: #2a9d8f;
+  color: #000000;
   margin: 0;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.user-name::before {
+  content: 'Welcome, ';
 }
 
 .logout-button {
@@ -168,28 +174,14 @@
   background-color: #21867a;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .dashboard-content {
-    flex-direction: column;
-  }
-
-  .profile-picture-container {
-    width: 300px;
-    height: 150px;
-    min-width: auto;    /* Allow smaller sizes on mobile */
-    margin: 30px 0 30px 0;
-  }
-}
-
 /* Menu Button (Hamburger Icon) */
-.menu-button {
-  background: none;
-  border: 1px solid #ccc;
+.hacker-dashboard .menu-button {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
   border-radius: 8px;
   font-size: 50px;
   cursor: pointer;
-  color: #000;
   width: 50px;
   height: 50px;
   display: flex;
@@ -200,6 +192,25 @@
   line-height: 1;
   box-sizing: border-box;
   overflow: hidden;
+  outline: none; /* Remove blue outline */
+}
+
+.hacker-dashboard .menu-button:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+body.dark-mode .hacker-dashboard .menu-button {
+  background: #ffffff00 !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .hacker-dashboard .menu-button:hover {
+  background-color: #ffffff83 !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
 }
 
 /* Dropdown Mini-Menu Styles */
@@ -231,4 +242,28 @@ color: #264653;
 
 .dropdown-menu li:hover {
 background-color: #f0f0f0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .user-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .user-name::before {
+    content: 'Welcome,';
+  }
+
+  .profile-picture-container {
+    width: 300px;
+    height: 150px;
+    min-width: auto;    /* Allow smaller sizes on mobile */
+    margin: 30px 0 30px 0;
+  }
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import './styles/Theme.css';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -43,81 +45,83 @@ import Settings from './pages/hacker/Settings';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <>
+      <Router>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        {/* Protected Route for Hacker Section */}
-        <Route 
-          path="/hacker" 
-          element={
-            <ProtectedRoute requiredRole="hacker">
-              <HackerDashboard />
-            </ProtectedRoute>
-          } 
-        />
+          {/* Protected Route for Hacker Section */}
+          <Route 
+            path="/hacker" 
+            element={
+              <ProtectedRoute requiredRole="hacker">
+                <HackerDashboard />
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Protected Route for Staff Section */}
-        <Route 
-          path="/staff" 
-          element={
-            <ProtectedRoute requiredRole="staff">
-              <StaffDashboard />
-            </ProtectedRoute>
-          }
-        >
-          {/* Default staff route: Profile */}
-          <Route index element={<ProfileView />} />
-          <Route path="profile" element={<ProfileView />} />
+          {/* Protected Route for Staff Section */}
+          <Route 
+            path="/staff" 
+            element={
+              <ProtectedRoute requiredRole="staff">
+                <StaffDashboard />
+              </ProtectedRoute>
+            }
+          >
+            {/* Default staff route: Profile */}
+            <Route index element={<ProfileView />} />
+            <Route path="profile" element={<ProfileView />} />
 
-          {/* Operations Routes */}
-          <Route path="operations/*" element={<OperationsPage />}>
-            <Route index element={<OperationsHome />} />
-            <Route path="home" element={<OperationsHome />} />
-            <Route path="schedule" element={<OperationsSchedule />} />
+            {/* Operations Routes */}
+            <Route path="operations/*" element={<OperationsPage />}>
+              <Route index element={<OperationsHome />} />
+              <Route path="home" element={<OperationsHome />} />
+              <Route path="schedule" element={<OperationsSchedule />} />
+            </Route>
+
+            {/* Sponsoring Routes */}
+            <Route path="sponsoring/*" element={<SponsoringPage />}>
+              <Route index element={<SponsoringHome />} />
+              <Route path="home" element={<SponsoringHome />} />
+              <Route path="sponsors" element={<SponsoringSponsors />} />
+              <Route path="budget" element={<SponsoringBudget />} />
+            </Route>
+
+            {/* Tech Routes */}
+            <Route path="tech/*" element={<TechPage />}>
+              <Route index element={<TechHome />} />
+              <Route path="home" element={<TechHome />} />
+              <Route path="registration" element={<TechRegistration />} />
+              <Route path="admin" element={<TechAdmin />} />
+            </Route>
+
+            {/* Marketing Routes */}
+            <Route path="marketing/*" element={<MarketingPage />}>
+              <Route index element={<MarketingHome />} />
+              <Route path="home" element={<MarketingHome />} />
+              <Route path="themeboard" element={<MarketingThemeboard />} />
+              <Route path="assets" element={<MarketingAssets />} />
+            </Route>
+
+            {/* Exec Routes */}
+            <Route path="exec/*" element={<ExecPage />}>
+              <Route index element={<ExecHome />} />
+              <Route path="home" element={<ExecHome />} />
+              <Route path="team_management" element={<ExecTeamManagement />} />
+            </Route>
           </Route>
 
-          {/* Sponsoring Routes */}
-          <Route path="sponsoring/*" element={<SponsoringPage />}>
-            <Route index element={<SponsoringHome />} />
-            <Route path="home" element={<SponsoringHome />} />
-            <Route path="sponsors" element={<SponsoringSponsors />} />
-            <Route path="budget" element={<SponsoringBudget />} />
-          </Route>
+          {/* Unauthorized */}
+          <Route path="/unauthorized" element={<div>Access Denied</div>} />
 
-          {/* Tech Routes */}
-          <Route path="tech/*" element={<TechPage />}>
-            <Route index element={<TechHome />} />
-            <Route path="home" element={<TechHome />} />
-            <Route path="registration" element={<TechRegistration />} />
-            <Route path="admin" element={<TechAdmin />} />
-          </Route>
-
-          {/* Marketing Routes */}
-          <Route path="marketing/*" element={<MarketingPage />}>
-            <Route index element={<MarketingHome />} />
-            <Route path="home" element={<MarketingHome />} />
-            <Route path="themeboard" element={<MarketingThemeboard />} />
-            <Route path="assets" element={<MarketingAssets />} />
-          </Route>
-
-          {/* Exec Routes */}
-          <Route path="exec/*" element={<ExecPage />}>
-            <Route index element={<ExecHome />} />
-            <Route path="home" element={<ExecHome />} />
-            <Route path="team_management" element={<ExecTeamManagement />} />
-          </Route>
-        </Route>
-
-        {/* Unauthorized */}
-        <Route path="/unauthorized" element={<div>Access Denied</div>} />
-
-        <Route path="/settings" element={<Settings />} />
-      </Routes>
-    </Router>
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
