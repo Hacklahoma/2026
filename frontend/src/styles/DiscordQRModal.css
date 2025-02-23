@@ -1,0 +1,99 @@
+.qr-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.qr-modal {
+  background: #2c2f33;
+  padding: 30px;
+  border-radius: 12px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  max-width: 300px;
+  width: 100%;
+}
+
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ffffff;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.close-button:hover {
+  opacity: 1;
+}
+
+.username-container {
+  margin: 20px 0;
+  padding: 15px;
+  background: #36393f;
+  border-radius: 8px;
+}
+
+.username-text {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: #7289da;
+  font-weight: bold;
+}
+
+.instructions {
+  text-align: left;
+  margin: 20px 0;
+  padding: 15px;
+  background: #36393f;
+  border-radius: 8px;
+}
+
+.instructions p {
+  margin: 0 0 10px 0;
+  color: #b9bbbe;
+}
+
+.instructions ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #b9bbbe;
+}
+
+.instructions li {
+  margin: 5px 0;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.instruction-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.inline-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-left: 4px;
+  display: inline-block;
+}

@@ -452,3 +452,11 @@ body.dark-mode .hacker-dashboard .menu-button-item {
     align-self: stretch;  /* Stretch to container width */
   }
 }
+
+.social-icon.clickable {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.social-icon.clickable:hover {
+  transform: scale(1.1);
+}

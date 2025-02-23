@@ -40,12 +40,12 @@ exports.getProfile = async (req, res) => {
 exports.updateSocialLinks = async (req, res) => {
   try {
     const { socialLinks } = req.body;
-    // Update the socialLinks field and return the updated document (excluding the password)
     const user = await User.findByIdAndUpdate(
       req.user.id,
       { socialLinks },
       { new: true }
     ).select('-password');
+    
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json({ socialLinks: user.socialLinks });
   } catch (error) {

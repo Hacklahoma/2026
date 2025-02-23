@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node ../scripts/getLocalIp.js && vite",
+    "dev:local": "node ../scripts/getLocalIp.js && vite --config vite.config.local.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
