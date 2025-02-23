@@ -10,8 +10,8 @@ const Settings = () => {
   const [status, setStatus] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   useEffect(() => {
     fetchUser();

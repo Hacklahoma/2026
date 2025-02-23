@@ -49,6 +49,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  flex-wrap: wrap;  /* Allow wrapping */
+  gap: 10px;  /* Space between wrapped elements */
 }
 
 .user-name {
@@ -56,27 +58,23 @@
   color: #000000;
   margin: 0;
   display: inline-block;
-  white-space: nowrap;
+  overflow-wrap: break-word;  /* Allow word breaking */
+  word-break: break-word;
+  max-width: calc(100% - 60px);  /* Leave space for menu button */
 }
 
 .user-name::before {
   content: 'Welcome, ';
 }
 
-.logout-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-
-.logout-button:hover {
-  opacity: 0.8;
+.menu_buttom-item .logout-button:hover {
+  color: inherit !important;
+  background-color: #ff6666 !important;
 }
 
 /* Profile Picture styling */
 .profile-picture-container {
-  margin: 15px auto;    /* Center with auto margins */
+  margin: 15px 1px;    /* Center with auto margins */
   width: 500px;         /* Match profile picture width */
   max-width: 100px;      /* Don't overflow parent */
   min-width: 150px;     /* Don't get too small */
@@ -123,39 +121,67 @@
   margin-bottom: 15px;
 }
 
+.dark-mode .qr-code-container {
+  height: 180px !important;
+  width: 180px !important;
+  border-radius: 12px !important;
+  background-color: #ffffff !important;
+}
+
 /* Right Panel: Social Links Form */
 .right-panel {
-  align-items: center;  /* Center children horizontally */
-  justify-content: flex-start; /* Start from top */
+  align-items: flex-start !important;  /* Left align all content */
+  justify-content: flex-start !important;
 }
 
 .form-title {
   font-size: 1.8rem;
   color: #264653;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.social-link-field {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  gap: 10px;
+  margin: 0 0 15px 0;
+  text-align: left !important;  /* Left align the title */
+  width: 100%;  /* Make title take full width */
 }
 
 .social-link-field label {
-  flex: 0 0 100px;
-  font-weight: bold;
-  color: #264653;
+  flex: 0 0 24px !important;
+  /* Remove all margins (top, right, bottom, left) from social icon labels */
+  margin: 0 10px 12px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.social-icon {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.222)) !important;  /* Add shadow for light mode */
+}
+
+/* Dark mode - combine invert with shadow */
+.dark-mode .social-icon {
+  filter: invert(1) drop-shadow(4px 4px 4px rgb(0, 0, 0)) !important;  /* Keep both invert and shadow */
 }
 
 .social-link-field input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-  background-color: #ffffff;
+  flex: 1 !important;
+  padding: 10px !important;
+  padding-left: 15px !important;  /* Reduced from 15px to 8px */
+  border: 1px solid #ccc !important;
+  border-radius: 6px !important;
+  font-size: 1rem !important;
+  background-color: #ffffff !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+  margin-left: 0 !important;  /* Ensure no left margin */
+}
+
+/* Dark mode styles for input fields */
+.dark-mode .social-link-field input {
+  background-color: #1a1a1a !important;
+  border-color: #404040 !important;
+  color: #ffffff !important;
+  transition: none !important;  /* Override the global transition */
 }
 
 .update-btn {
@@ -168,49 +194,23 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 15px;
+  align-self: flex-start !important;  /* Left align the button */
 }
 
 .update-btn:hover {
   background-color: #21867a;
 }
 
-/* Menu Button (Hamburger Icon) */
-.hacker-dashboard .menu-button {
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  color: #000000 !important;
-  border-radius: 8px;
-  font-size: 50px;
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 10px 0 0;
-  padding: 0 0 10px 0;
-  line-height: 1;
-  box-sizing: border-box;
-  overflow: hidden;
-  outline: none; /* Remove blue outline */
-}
-
-.hacker-dashboard .menu-button:hover {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border-color: #000000 !important;
-}
-
 body.dark-mode .hacker-dashboard .menu-button {
-  background: #ffffff00 !important;
-  border: 2px solid #ffffff !important;
+  background: transparent !important;
+  border: none !important;
   color: #ffffff !important;
 }
 
-body.dark-mode .hacker-dashboard .menu-button:hover {
-  background-color: #ffffff83 !important;
+body.dark-mode .hacker-dashboard .menu-button:hover,
+body.dark-mode .hacker-dashboard .menu-button[data-active="true"] {
+  background-color: #ffffff !important;
   color: #000000 !important;
-  border-color: #000000 !important;
 }
 
 /* Dropdown Mini-Menu Styles */
@@ -244,10 +244,189 @@ color: #264653;
 background-color: #f0f0f0;
 }
 
-/* Mobile adjustments */
+.menu-container {
+  position: relative;
+}
+
+.menu-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff !important;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dark-mode .menu-popup {
+  background-color: #1a1a1a !important;
+}
+
+.menu-popup.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menu-button {
+  width: 50px;
+  height: 50px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #000000;
+  flex-shrink: 0;
+  outline: none !important;
+}
+
+.menu-button:hover,
+.menu-button[data-active="true"] {
+  background-color: #000000 !important;
+  border: none !important;
+}
+
+.menu-button img {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.menu-button:hover img,
+.menu-button[data-active="true"] img {
+  filter: invert(1);
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.dark-mode .menu-button:hover img,
+.dark-mode .menu-button[data-active="true"] img {
+  filter: invert(0);
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.dark-mode .menu-button {
+  border: none !important;
+}
+
+.dark-mode .menu-button img {
+  filter: invert(1);
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.menu-items {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  padding: 5px !important;
+}
+
+.menu-button-item {
+  width: 100% !important;
+  padding: 8px 16px !important;
+  border: none !important;
+  background: none !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  border-radius: 4px !important;
+  color: #000000 !important;
+  outline: none !important;
+}
+
+.menu-button-item:hover {
+  background-color: #f5f5f5 !important;
+  border: none !important;
+}
+
+body.dark-mode .hacker-dashboard .menu-button-item {
+  color: #ffffff !important;
+}
+
+.dark-mode .menu-button-item:hover {
+  background-color: #2d2d2d !important;
+}
+
+.menu-button-item.logout-button {
+  color: inherit !important;
+  outline: none !important;
+}
+
+.menu-button-item.logout-button:hover {
+  color: inherit !important;
+  background-color: #ff6666 !important;
+}
+
+.dark-mode .menu-button-item.logout-button:hover {
+  color: inherit !important;
+  background-color: #ff6666 !important;
+}
+
+.theme-toggle-container {
+  padding: 0 16px !important;
+}
+
+.theme-toggle {
+  position: relative !important;
+  width: 60px !important;
+  height: 30px !important;
+  background-color: #e4e4e4 !important;
+  border-radius: 20px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 2px 2px !important;  /* Adjusted horizontal padding */
+}
+
+.theme-toggle.dark {
+  background-color: #2d2d2d !important;
+}
+
+.toggle-thumb {
+  position: absolute !important;
+  left: 4px !important;
+  width: 25px !important;
+  height: 25px !important;
+  background-color: white !important;
+  border-radius: 50% !important;
+  transition: transform 0.3s ease !important;
+  z-index: 2 !important;  /* Ensure circle is above icons */
+  outline: none !important;
+}
+
+.theme-toggle.dark .toggle-thumb {
+  transform: translateX(30px) !important;
+}
+
+.theme-icon {
+  width: 20px !important;
+  height: 20px !important;
+  z-index: 1 !important;  /* Keep icons below the circle */
+  position: relative !important;
+}
+
+.theme-icon.sun {
+  margin: 0 0 0 4px !important;  /* top right bottom left - margin only on left */
+}
+
+.theme-icon.moon {
+  margin: 0 4px 0 0 !important;  /* top right bottom left - margin only on right */
+}
+
+/* All media queries at the bottom */
 @media (max-width: 768px) {
   .dashboard-content {
     flex-direction: column;
+    padding: 0 10px;  /* Reduce padding on mobile */
+  }
+
+  .right-panel {
+    padding: 15px;  /* Reduce panel padding */
   }
 
   .user-name {
@@ -262,8 +441,14 @@ background-color: #f0f0f0;
 
   .profile-picture-container {
     width: 300px;
-    height: 150px;
-    min-width: auto;    /* Allow smaller sizes on mobile */
-    margin: 30px 0 30px 0;
+    height: 100px;
+    min-width: auto;
+    margin: 30px 0;
+  }
+
+  .update-btn {
+    width: 100%;  /* Full width */
+    margin: 15px 0;  /* Vertical margin only */
+    align-self: stretch;  /* Stretch to container width */
   }
 }

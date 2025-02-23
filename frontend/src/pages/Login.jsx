@@ -14,9 +14,9 @@ const Login = () => {
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
-  // Build the base URL using the environment variable. Default to 5000 if not set.
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  // Build the base URL using the SERVER_PORT (backend port)
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;

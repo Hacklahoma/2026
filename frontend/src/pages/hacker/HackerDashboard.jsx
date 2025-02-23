@@ -2,9 +2,35 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useNavigate } from 'react-router-dom';
-import sunIcon from '../../assets/icons/sun_icon.png';
-import moonIcon from '../../assets/icons/moon_icon.png';
+import {
+  sunIcon,
+  moonIcon,
+  hamburgerIcon,
+  githubIcon,
+  linkedInIcon,
+  linkedInDarkIcon,
+  discordIcon,
+  discordDarkIcon,
+  instagramIcon,
+  instagramDarkIcon,
+} from '../../assets/icons';
 import '../../styles/HackerDashboard.css';
+
+const ThemeToggle = ({ isDarkMode, onToggle }) => (
+  <div 
+    className={`theme-toggle ${isDarkMode ? 'dark' : ''}`}
+    onClick={(e) => {
+      e.stopPropagation();
+      onToggle();
+    }}
+    role="switch"
+    aria-checked={isDarkMode}
+  >
+    <img src={sunIcon} alt="Light mode" className="theme-icon sun" />
+    <img src={moonIcon} alt="Dark mode" className="theme-icon moon" />
+    <div className="toggle-thumb" />
+  </div>
+);
 
 const HackerDashboard = () => {
   const [user, setUser] = useState(null);
@@ -24,9 +50,9 @@ const HackerDashboard = () => {
     return savedTheme === 'true';
   });
 
-  // Build the base URL using the environment variable. Default to 5000 if not set.
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  // Build the base URL using the environment variable. Default to 5174 if not set.
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -132,31 +158,40 @@ const HackerDashboard = () => {
             <h1 className="user-name">
               <span>{user.firstName} {user.lastName}</span>
             </h1>
-            <div ref={menuRef}>
+            <div className="menu-container" ref={menuRef}>
               <button 
-                className="hacker-dashboard menu-button" 
-                onClick={() => setMenuOpen(prev => !prev)}
+                className="menu-button"
+                data-active={menuOpen.toString()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMenuOpen(!menuOpen);
+                }}
               >
-                ☰
+                <img 
+                  src={hamburgerIcon} 
+                  alt="Menu" 
+                  style={{ width: '24px', height: '24px' }}
+                />
               </button>
               {menuOpen && (
-                <div className="dropdown-menu">
-                  <ul>
-                    <li onClick={() => { setMenuOpen(false); navigate('/settings'); }}>
+                <div className={`menu-popup ${menuOpen ? 'open' : ''}`}>
+                  <div className="menu-items">
+                    <button 
+                      className="menu-button-item"
+                      onClick={() => { setMenuOpen(false); navigate('/settings'); }}
+                    >
                       Settings
-                    </li>
-                    <li onClick={() => { setMenuOpen(false); handleThemeToggle(); }} className="theme-toggle">
-                      <img 
-                        src={isDarkMode ? sunIcon : moonIcon} 
-                        alt={isDarkMode ? "Light Mode" : "Dark Mode"} 
-                        className="theme-icon"
-                      />
-                      {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-                    </li>
-                    <li onClick={() => { setMenuOpen(false); handleLogout(); }}>
+                    </button>
+                    <button 
+                      className="menu-button-item logout-button"
+                      onClick={() => { setMenuOpen(false); handleLogout(); }}
+                    >
                       Logout
-                    </li>
-                  </ul>
+                    </button>
+                    <div className="theme-toggle-container">
+                      <ThemeToggle isDarkMode={isDarkMode} onToggle={handleThemeToggle} />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -180,7 +215,13 @@ const HackerDashboard = () => {
         <div className="right-panel">
           <h2 className="form-title">Update Social Links</h2>
           <div className="social-link-field">
-            <label htmlFor="github">Github:</label>
+            <label htmlFor="github">
+              <img 
+                src={isDarkMode ? githubIcon : githubIcon} 
+                alt="Github" 
+                className="social-icon" 
+              />
+            </label>
             <input 
               type="text" 
               id="github" 
@@ -191,7 +232,13 @@ const HackerDashboard = () => {
             />
           </div>
           <div className="social-link-field">
-            <label htmlFor="linkedin">LinkedIn:</label>
+            <label htmlFor="linkedin">
+              <img 
+                src={isDarkMode ? linkedInDarkIcon : linkedInIcon} 
+                alt="LinkedIn" 
+                className="social-icon" 
+              />
+            </label>
             <input 
               type="text" 
               id="linkedin" 
@@ -202,7 +249,13 @@ const HackerDashboard = () => {
             />
           </div>
           <div className="social-link-field">
-            <label htmlFor="discord">Discord:</label>
+            <label htmlFor="discord">
+              <img 
+                src={isDarkMode ? discordDarkIcon : discordIcon} 
+                alt="Discord" 
+                className="social-icon" 
+              />
+            </label>
             <input 
               type="text" 
               id="discord" 
@@ -213,7 +266,13 @@ const HackerDashboard = () => {
             />
           </div>
           <div className="social-link-field">
-            <label htmlFor="instagram">Instagram:</label>
+            <label htmlFor="instagram">
+              <img 
+                src={isDarkMode ? instagramDarkIcon : instagramIcon} 
+                alt="Instagram" 
+                className="social-icon" 
+              />
+            </label>
             <input 
               type="text" 
               id="instagram" 
