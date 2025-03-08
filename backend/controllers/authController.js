@@ -38,32 +38,23 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // Find the user by email
     const user = await User.findOne({ email });
-    if (!user) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Compare provided password with hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
-
-    // Create a JWT token
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: '1h' }
+      { expiresIn: '24h' }
     );
 
-    // Set the token in an HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false, // set to true if using HTTPS in production
+      secure: false,
       sameSite: 'lax',
-      maxAge: 3600000  // 1 hour in milliseconds
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      path: '/'
     });
 
     return res.status(200).json({ message: 'Login successful', role: user.role });
@@ -74,21 +65,28 @@ exports.login = async (req, res) => {
 };
 
 exports.verify = (req, res) => {
-  // Retrieve the token from the cookies (ensure cookie-parser is used in server.js)
   const token = req.cookies.token;
-
+  
   if (!token) {
-    return res.status(401).json({ authenticated: false, message: 'No token provided' });
+    console.log('No token found in cookies:', req.cookies);
+    return res.status(401).json({ 
+      authenticated: false, 
+      message: 'No token provided',
+      cookies: req.cookies // Debug info
+    });
   }
 
   try {
-    // Verify token using the secret
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // If valid, return authenticated true and the user's role
+    console.log('Token verified successfully:', decoded);
     return res.json({ authenticated: true, role: decoded.role });
   } catch (err) {
     console.error('Token verification error:', err);
-    return res.status(401).json({ authenticated: false, message: 'Invalid token' });
+    return res.status(401).json({ 
+      authenticated: false, 
+      message: 'Invalid token',
+      error: err.message
+    });
   }
 };
 

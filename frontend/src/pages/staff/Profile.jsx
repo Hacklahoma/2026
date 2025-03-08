@@ -15,9 +15,9 @@ const Profile = () => {
   const [updating, setUpdating] = useState(false);
   const navigate = useNavigate();
 
-  // Read the server port from environment variables; default to 5000 if not set
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  // Read the server port from environment variables; default to 5174 if not set
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   useEffect(() => {
     const fetchProfile = async () => {

@@ -6,8 +6,8 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // null means loading
   const [userRole, setUserRole] = useState(null);
 
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   useEffect(() => {
     const verifyAuth = async () => {

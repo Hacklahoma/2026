@@ -14,9 +14,9 @@ const Login = () => {
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
-  // Build the base URL using the environment variable. Default to 5000 if not set.
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  // Build the base URL using the SERVER_PORT (backend port)
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,48 +63,50 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="card">
-        <h1 className="login-header">Login</h1>
-        <form onSubmit={handleSubmit} className="form-content">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-actions">
-            <div className="redirect-inline">
-              <span>Don't have an account?</span>
-              <button
-                type="button"
-                className="register-btn"
-                onClick={() => navigate('/register')}
-              >
-                Register
-              </button>
+    <div className="screen-container">
+      <div className="card-container">
+        <div className="card">
+          <h1 className="login-header">Login</h1>
+          <form onSubmit={handleSubmit} className="form-content">
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
             </div>
-            <button type="submit" className="submit-btn" disabled={loading}>
-              Login
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <button type="submit" className="button inverse" disabled={loading}>
+              LOGIN
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
+        
+        <div className="create-account-card">
+          <h2>Create an account</h2>
+          <button 
+            className="button"
+            onClick={() => navigate('/register')}
+          >
+            CREATE AN ACCOUNT
+          </button>
+          <p>Sign up for lots of features!</p>
+          <p>Leaderboards, Maps, Schedules, and more!</p>
+        </div>
       </div>
       <Modal
         isOpen={modalOpen}

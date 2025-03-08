@@ -11,9 +11,9 @@ const userSchema = new mongoose.Schema({
   role:      { type: String, enum: ['hacker', 'staff'], default: 'hacker' },
   profilePicture: { type: String, default: '' },
   socialLinks: {
-    github:    { type: String, default: '' },
-    linkedin:  { type: String, default: '' },
-    discord:   { type: String, default: '' },
+    github: { type: String, default: '' },
+    linkedin: { type: String, default: '' },
+    discord: { type: String, default: '' },
     instagram: { type: String, default: '' }
   }
 }, { timestamps: true });

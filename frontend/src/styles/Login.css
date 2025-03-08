@@ -1,130 +1,275 @@
+/* Full-screen container */
+.screen-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
 
-  
-  /* Full-screen container */
-  .login-container {
-    display: flex;
-    width: 100vw;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #eaf4f8, #ffffff);
-    align-items: center;
-    justify-content: center;
-  }
-  
-  /* For mobile, allow vertical scrolling if needed */
-  @media (max-width: 768px) {
-    .login-container {
-      height: auto;
-      overflow-y: auto;
-    }
-  }
-  
-  /* Card styling: centered, dynamic width */
-  .card {
-    background-color: #ffffff;
-    border-radius: 10px;
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+}
 
-    /* Darker Box shadow for depth */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#root {
+  max-width: none;  /* Remove the max-width restriction */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
 
-    padding: 40px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Container for both cards */
+.card-container {
+  display: flex;
+  width: 80%;
+  max-width: 1000px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Left card (login) */
+.screen-container .card-container .card {
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+  background-color: #ffffff;
+  border-radius: 0;
+}
+
+/* Right card (create account) */
+.create-account-card {
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+  background-color: #ffffff;  /* Changed to match login card */
+  border-radius: 0;
+}
+
+.create-account-card h2 {
+  font-size: 2rem;
+  color: #2a9d8f;
+  margin: -8px 0 20px 0;
+  align-self: flex-start;
+}
+
+.create-account-card p {
+  color: #264653;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  align-self: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+.create-account-btn {
+  margin-top: -10px;
+}
+
+/* Header for the card */
+.login-header {
+  text-align: left;
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #2a9d8f;
+  margin: 0 0 20px 0;  /* Remove top margin, keep bottom margin */
+  align-self: flex-start;
+}
+
+/* Form content styling */
+.form-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form group (input fields) */
+.form-group {
+  width: 100%;
+  margin-bottom: 0px;
+  text-align: left;
+}
+
+.form-group input {
+  width: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Button container to force left alignment */
+.form-content button {
+  width: auto;
+  margin-top: 20px;
+  align-self: flex-start;
+}
+
+/* Form groups */
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #264653;
+}
+
+/* Form actions container: inline layout */
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  gap: 40px;
+}
+
+/* Inline redirect styling */
+.redirect-inline {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.redirect-inline span {
+  font-size: 1rem;
+  color: #264653;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color-scheme: dark;
+    background-color: #1a1a1a !important;
   }
-  
-  /* Header for the card */
-  .login-header {
-    font-size: 2rem;
-    color: #2a9d8f;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  /* Form content */
-  .form-content {
+
+  #root {
+    background-color: #1a1a1a !important;
     width: 100%;
   }
-  
-  /* Form groups */
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 16px;
+
+  .screen-container {
+    margin: 0 auto;
+    width: 100%;  /* Changed back to 100% to take up full width */
+    background-color: #1a1a1a !important;
   }
+  
+  .card-container {
+    background-color: #2d2d2d !important;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  }
+  
+  .card {
+    background-color: #2d2d2d !important;
+    border-right: 1px solid #404040;
+  }
+  
+  .login-header {
+    color: #4fd1c5 !important;
+  }
+  
   .form-group label {
-    font-weight: bold;
-    margin-bottom: 4px;
-    color: #264653;
+    color: #ffffff !important;
   }
+  
   .form-group input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
+    background-color: #1a1a1a !important;
+    border-color: #404040 !important;
+    color: #ffffff !important;
   }
   
-  /* Form actions container: inline layout */
-  .form-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    gap: 40px;
-  }
-  
-  /* Submit button styling */
-  .submit-btn {
-    padding: 12px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #2a9d8f;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .submit-btn:hover {
-    background-color: #21867a;
-  }
-  
-  /* Inline redirect styling */
-  .redirect-inline {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
   .redirect-inline span {
-    font-size: 1rem;
-    color: #264653;
+    color: #ffffff !important;
   }
-  .register-btn {
-    padding: 6px 10px;
-    font-size: 0.9rem;
-    background-color: #264653;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .register-btn:hover {
-    background-color: #1f3d4b;
+
+  .create-account-card {
+    background-color: #333333 !important;
   }
   
-  /* Responsive adjustments for desktop */
-  @media (min-width: 769px) {
-    .card {
-      width: 90vw;
-      max-width: 600px;
-    }
+  .create-account-card h2 {
+    color: #4fd1c5 !important;
   }
   
-  /* For mobile, adjust card width */
-  @media (max-width: 768px) {
-    .card {
-      width: 90vw;
-    }
+  .create-account-card p {
+    color: #ffffff !important;
   }
+  
+  .create-account-btn {
+    background-color: #4fd1c5 !important;
+    color: #1a1a1a !important;
+  }
+  
+  .create-account-btn:hover {
+    background-color: #3db1a5 !important;
+  }
+
+  button.inverse {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+  }
+  
+  button.inverse:hover {
+    background-color: #21867a !important;
+    color: #ffffff !important;
+    border-color: #21867a !important;
+  }
+
+  button {
+    background-color: #21867a !important;
+    color: #ffffff !important;
+    border: 2px solid#21867a !important;
+  }
+  
+  button:hover {
+    background-color: #ffffff !important;
+    color: #21867a !important;
+    border: 2px solid#21867a !important;
+  }
+}
+
+/* Responsive adjustments for desktop */
+@media (min-width: 769px) {
+  .card {
+    width: 90vw;
+    max-width: 600px;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  /* Screen container adjustments */
+  .screen-container {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  /* Card container adjustments */
+  .card-container {
+    flex-direction: column;
+    width: 90%;
+  }
+
+  /* Card adjustments */
+  .screen-container .card-container .card,
+  .create-account-card {
+    width: 100%;
+    padding: 30px;
+  }
+
+  /* Button adjustments */
+  .form-content button {
+    width: 100%;
+    align-self: stretch;
+  }
+}
   

@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Home.css';
 
+axios.defaults.withCredentials = true;
+
 const Home = () => {
   const navigate = useNavigate();
-  // Get the server port from environment variables. Default to 5000 if not defined.
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const protocol = 'http';  // Always use http in development
+  const baseURL = `${protocol}://${window.location.hostname}:${serverPort}`;
 
   const handleEnterPortal = async () => {
     try {

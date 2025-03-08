@@ -21,9 +21,9 @@ const Register = () => {
   const [modalMessage, setModalMessage] = useState('');
   const navigate = useNavigate();
 
-  // Build base URL using environment variable; default to 5000 if not set.
-  const serverPort = import.meta.env.VITE_SERVER_PORT || 5000;
-  const baseURL = `http://localhost:${serverPort}`;
+  // Build base URL using environment variable; default to 5174 if not set.
+  const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
+  const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -169,8 +169,8 @@ const Register = () => {
                 I agree to the code of conduct
               </label>
             </div>
-            <button type="submit" className="submit-btn" disabled={loading}>
-              Register
+            <button type="submit" className="button inverse" disabled={loading}>
+              REGISTER
             </button>
           </div>
         </form>

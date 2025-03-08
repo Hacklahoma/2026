@@ -27,25 +27,35 @@ app.use((req, res, next) => {
   next();
 });
 
-// Enable CORS for your frontend origin and allow credentials (cookies)
+// CORS configuration - place this BEFORE your routes
 app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-  credentials: true  // Allow cookies to be sent
+  origin: [
+    'http://localhost:5175',
+    'http://127.0.0.1:5175',
+    'http://192.168.1.156:5175'  // Add your specific IP
+  ].filter(Boolean),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  exposedHeaders: ['Set-Cookie']
 }));
 
-app.use(bodyParser.json());
-app.use(cookieParser()); // Use cookie-parser to parse cookies
+app.use(cookieParser());
+app.use(express.json());
 
 // Connect to MongoDB using the URI from .env and log connection events
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
-  console.log('✅ MongoDB Connected Successfully');
+  console.log('📦 Connected to MongoDB');
 }).catch(err => {
-  console.error('❌ MongoDB Connection Error:', err);
+  console.error('MongoDB connection error:', err);
+});
+
+// Error handler
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
 });
 
 // Log when auth routes are accessed and delegate to authRoutes
@@ -72,7 +82,9 @@ app.use('/api/staff', (req, res, next) => {
   next();
 }, staffRoutes);
 
-const PORT = process.env.PORT || 5000;
+app.use('/uploads', express.static('uploads'));
+
+const PORT = process.env.PORT || 5174;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

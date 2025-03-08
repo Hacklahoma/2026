@@ -8,14 +8,6 @@
   height: 100vh;
 }
 
-/* For mobile devices, allow vertical scrolling */
-@media (max-width: 768px) {
-  .register-container {
-    height: auto;
-    overflow-y: auto;
-  }
-}
-
 /* Registration card styling */
 .card {
   background-color: #ffffff;
@@ -83,29 +75,6 @@ margin-bottom: 12px;
 flex: 1;
 }
 
-/* On desktop, set each half to 48% of the card width; on mobile, 100% */
-@media (min-width: 769px) {
-  .card {
-    width: 90vw;
-    max-width: 1000px;
-  }
-  .form-half {
-    flex: 0 0 48%;
-  }
-}
-
-@media (max-width: 768px) {
-  .card {
-    width: 90vw;
-  }
-  .card-form {
-    flex-direction: column;
-  }
-  .form-half {
-    width: 100%;
-  }
-}
-
 /* Section headings */
 .form-half h2 {
   font-size: 1.5rem;
@@ -153,4 +122,88 @@ input[type="password"] {
 }
 .submit-btn:hover {
   background-color: #21867a;
+}
+
+/* Add dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .register-container {
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  }
+
+  .card {
+    background-color: #2d2d2d;
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
+  }
+
+  .register-header {
+    color: #4fd1c5;
+  }
+
+  .login-redirect-header {
+    color: #ffffff;
+  }
+
+  .form-half h2 {
+    color: #ffffff;
+  }
+
+  label {
+    color: #ffffff;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    background-color: #1a1a1a;
+    border-color: #404040;
+    color: #ffffff;
+  }
+
+  .checkbox-group {
+    color: #ffffff;
+  }
+
+  .submit-btn {
+    background-color: #4fd1c5;
+    color: #1a1a1a;
+  }
+
+  .submit-btn:hover {
+    background-color: #3db1a5;
+  }
+
+  .login-btn {
+    background-color: #4fd1c5;
+    color: #1a1a1a;
+  }
+
+  .login-btn:hover {
+    background-color: #3db1a5;
+  }
+}
+/* On desktop, set each half to 48% of the card width; on mobile, 100% */
+@media (min-width: 769px) {
+  .card {
+    width: 90vw;
+    max-width: 1000px;
+  }
+  .form-half {
+    flex: 0 0 48%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90vw;
+  }
+  .card-form {
+    flex-direction: column;
+  }
+  .form-half {
+    width: 100%;
+  }
+  .register-container {
+    height: auto;
+    overflow-y: auto;
+  }
 }
