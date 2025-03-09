@@ -19,7 +19,7 @@ body.dark-mode .home-container {
     display: flex;
     width: 80vw;
     max-width: 1200px;
-    background: #fff;
+    background: #f7f7f7;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -39,6 +39,10 @@ body.dark-mode .home-card {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.dark-mode .home-left {
+    background-color: #2d2d2d;
 }
 
 /* Headings styling */
@@ -61,7 +65,7 @@ body.dark-mode .home-left h1 {
 }
 
 body.dark-mode .home-left h2 {
-    color: #bcbcbc;
+    color: #ffffff;
 }
 
 /* Enter HackPortal button styling */

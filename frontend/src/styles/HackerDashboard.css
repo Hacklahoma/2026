@@ -34,6 +34,7 @@
   background-color: #f9f9f9;
   display: flex;        /* Enable flex layout */
   flex-direction: column; /* Stack children vertically */
+  justify-content: center;
 }
 
 /* Left Panel specific */
@@ -49,22 +50,23 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  flex-wrap: wrap;  /* Allow wrapping */
-  gap: 10px;  /* Space between wrapped elements */
+  gap: 10px;
+  flex-wrap: nowrap;  /* Prevent wrapping by default */
 }
 
 .user-name {
   font-size: 2.5rem;
   color: #000000;
-  margin: 0;
-  display: inline-block;
-  overflow-wrap: break-word;  /* Allow word breaking */
+  margin: 0 auto;
+  flex: 1;
+  min-width: 0;  /* Allow text to shrink below content size */
+  overflow-wrap: break-word;
   word-break: break-word;
-  max-width: calc(100% - 60px);  /* Leave space for menu button */
+  justify-content: center;
 }
 
 .user-name::before {
-  content: 'Welcome, ';
+  content: none;
 }
 
 .menu_buttom-item .logout-button:hover {
@@ -72,12 +74,21 @@
   background-color: #ff6666 !important;
 }
 
+/* Profile Picture and QR Code Container */
+.profile-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  margin: 15px 0;
+}
+
 /* Profile Picture styling */
 .profile-picture-container {
-  margin: 15px 1px;    /* Center with auto margins */
-  width: 500px;         /* Match profile picture width */
-  max-width: 100px;      /* Don't overflow parent */
-  min-width: 150px;     /* Don't get too small */
+  margin: 0;    /* Remove margin since it's handled by parent */
+  width: 150px;
+  min-width: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,11 +125,10 @@
 
 /* QR Code container */
 .qr-code-container {
+  margin: 0;    /* Remove margin since it's handled by parent */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 15px;
-  margin-bottom: 15px;
 }
 
 .dark-mode .qr-code-container {
@@ -246,6 +256,9 @@ background-color: #f0f0f0;
 
 .menu-container {
   position: relative;
+  top: -5px;  /* Move the entire container up */
+  right: -5px;
+  z-index: 1000;  /* Ensure it stays above other elements */
 }
 
 .menu-popup {
@@ -269,18 +282,15 @@ background-color: #f0f0f0;
 }
 
 .menu-button {
-  width: 50px;
-  height: 50px;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none !important;
   border: none !important;
-  cursor: pointer;
-  border-radius: 4px;
-  color: #000000;
-  flex-shrink: 0;
+  background: none !important;
+  padding: 0 !important;
+  width: 45px !important;
+  height: 45px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 20% !important;
   outline: none !important;
 }
 
@@ -349,11 +359,13 @@ body.dark-mode .hacker-dashboard .menu-button-item {
 
 .dark-mode .menu-button-item:hover {
   background-color: #2d2d2d !important;
+  transition: color 0s !important;
 }
 
 .menu-button-item.logout-button {
   color: inherit !important;
   outline: none !important;
+  transition: color 0s !important;
 }
 
 .menu-button-item.logout-button:hover {
@@ -418,25 +430,11 @@ body.dark-mode .hacker-dashboard .menu-button-item {
   margin: 0 4px 0 0 !important;  /* top right bottom left - margin only on right */
 }
 
-/* All media queries at the bottom */
+/* Media query for profile picture and QR code on mobile phones */
 @media (max-width: 768px) {
-  .dashboard-content {
+  .profile-section {
     flex-direction: column;
-    padding: 0 10px;  /* Reduce padding on mobile */
-  }
-
-  .right-panel {
-    padding: 15px;  /* Reduce panel padding */
-  }
-
-  .user-name {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .user-name::before {
-    content: 'Welcome,';
+    gap: 15px;
   }
 
   .profile-picture-container {
@@ -446,10 +444,64 @@ body.dark-mode .hacker-dashboard .menu-button-item {
     margin: 30px 0;
   }
 
+  .qr-code-container {
+    margin: 15px 0;
+  }
+}
+
+/* Media query for overall layout on tablets and smaller */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    flex-direction: column;
+    padding: 0 10px;
+    width: 100% !important;
+  }
+
+  .menu-button {
+    top: 0px;
+  }
+
+  .right-panel {
+    padding: 15px;
+  }
+
+  .dashboard-header {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .menu-container {
+    top: -25px;
+  }
+
+  .user-name {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+    align-self: flex-start;
+    font-size: 2rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
   .update-btn {
-    width: 100%;  /* Full width */
-    margin: 15px 0;  /* Vertical margin only */
-    align-self: stretch;  /* Stretch to container width */
+    width: 100%;
+    margin: 15px 0;
+    align-self: stretch;
+  }
+}
+
+/* Media query for very small screens */
+@media (max-width: 480px) {
+  .dashboard-header {
+    flex-wrap: wrap;  /* Only allow wrapping on very small screens */
+  }
+
+  .user-name {
+    font-size: 2rem;
   }
 }
 

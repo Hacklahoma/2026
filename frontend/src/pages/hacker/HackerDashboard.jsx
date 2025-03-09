@@ -17,6 +17,7 @@ import {
 import '../../styles/HackerDashboard.css';
 import { isValidUrl, cleanUrl } from '../../utils/validation';
 import DiscordQRModal from '../../components/DiscordQRModal';
+import InstagramQRModal from '../../components/InstagramQRModal';
 
 const ThemeToggle = ({ isDarkMode, onToggle }) => (
   <div 
@@ -51,7 +52,8 @@ const HackerDashboard = () => {
     const savedTheme = localStorage.getItem('darkMode');
     return savedTheme === 'true';
   });
-  const [showQRModal, setShowQRModal] = useState(false);
+  const [showDiscordQR, setShowDiscordQR] = useState(false);
+  const [showInstagramQR, setShowInstagramQR] = useState(false);
 
   // Build the base URL using the environment variable. Default to 5174 if not set.
   const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
@@ -108,14 +110,66 @@ const HackerDashboard = () => {
     localStorage.setItem('darkMode', isDarkMode);
   }, [isDarkMode]);
 
+  // Function to extract just the username from URLs for display
+  const extractUsername = (url, platform) => {
+    if (!url) return '';
+    
+    switch(platform) {
+      case 'github':
+        return url.replace(/^(https?:\/\/)?(www\.)?github\.com\//, '');
+      case 'linkedin':
+        return url.replace(/^(https?:\/\/)?(www\.)?linkedin\.com\/(in\/)?/, '');
+      case 'discord':
+        return url.replace(/^(https?:\/\/)?(www\.)?discord\.com\/users\//, '');
+      case 'instagram':
+        return url.replace(/^(https?:\/\/)?(www\.)?instagram\.com\//, '');
+      default:
+        return url;
+    }
+  };
+
   const handleSocialChange = (e) => {
-    setSocialLinks({ ...socialLinks, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    // Convert username to full URL for storage
+    let fullValue = value;
+    
+    // Only prepend URL if user is typing just a username
+    if (value && !value.includes('/')) {
+      switch(name) {
+        case 'github':
+          fullValue = `github.com/${value}`;
+          break;
+        case 'linkedin':
+          fullValue = `linkedin.com/in/${value}`;
+          break;
+        case 'discord':
+          // For discord, we'll just store the username and format it later
+          fullValue = value;
+          break;
+        case 'instagram':
+          fullValue = `instagram.com/${value}`;
+          break;
+        default:
+          fullValue = value;
+      }
+    }
+    
+    setSocialLinks({ ...socialLinks, [name]: fullValue });
   };
 
   // Add this function to format Discord username to URL
   const formatDiscordUrl = (username) => {
+    // First, clean any existing URLs by extracting just the username
+    let cleanUsername = username;
+    
     // Remove any URL parts if someone pastes a full URL
-    const cleanUsername = username.replace(/https?:\/\/discord\.com\/users\//, '');
+    if (username.includes('discord.com/users/')) {
+      // Extract just the username at the end
+      const parts = username.split('discord.com/users/');
+      cleanUsername = parts[parts.length - 1];
+    }
+    
     return username ? `discord.com/users/${cleanUsername}` : '';
   };
 
@@ -160,10 +214,10 @@ const HackerDashboard = () => {
       
       setSocialLinks(cleanedLinks);
       setUser({ ...user, socialLinks: cleanedLinks });
-      alert("Social links updated successfully.");
+      alert("Socials updated successfully.");
     } catch (error) {
-      console.error('Error updating social links:', error);
-      alert("Error updating social links.");
+      console.error('Error updating socials:', error);
+      alert("Error updating socials.");
     } finally {
       setUpdating(false);
     }
@@ -184,13 +238,29 @@ const HackerDashboard = () => {
   };
 
   const handleIconClick = (platform, url) => {
-    if (platform === 'discord' && url) {
-      // Extract username from discord.com/users/USERNAME format
-      const username = url.split('/').pop();
-      if (username) {
-        setShowQRModal(true);
-        return;
+    if (platform === 'discord') {
+      if (url) {
+        const username = url.split('/').pop();
+        if (username) {
+          setShowDiscordQR(true);
+          return;
+        }
+      } else {
+        // If no Discord URL is set, open the Hacklahoma Discord
+        window.open('https://discord.gg/E9AHGZTuP3', '_blank');
       }
+      return;
+    }
+
+    if (platform === 'instagram') {
+      if (url) {
+        const username = url.split('/').pop();
+        if (username) {
+          setShowInstagramQR(true);
+          return;
+        }
+      }
+      return;
     }
 
     if (url) {
@@ -199,29 +269,13 @@ const HackerDashboard = () => {
       return;
     }
 
-    // Updated default URLs with Hacklahoma Discord
+    // Default URLs only for github and linkedin
     const defaultUrls = {
       github: 'https://github.com',
-      linkedin: 'https://linkedin.com',
-      discord: 'https://discord.gg/E9AHGZTuP3',
-      instagram: 'https://instagram.com'
+      linkedin: 'https://linkedin.com'
     };
     
-    console.log('Using default URL:', defaultUrls[platform]);
-    
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      const appUrls = {
-        github: 'github://',
-        linkedin: 'linkedin://',
-        discord: 'discord://',
-        instagram: 'instagram://'
-      };
-      
-      window.location.href = appUrls[platform];
-      setTimeout(() => {
-        window.open(defaultUrls[platform], '_blank');
-      }, 1000);
-    } else {
+    if (defaultUrls[platform]) {
       window.open(defaultUrls[platform], '_blank');
     }
   };
@@ -266,9 +320,6 @@ const HackerDashboard = () => {
         {/* Left Panel: User Info */}
         <div className="left-panel">
           <header className="dashboard-header">
-            <h1 className="user-name">
-              <span>{user.firstName} {user.lastName}</span>
-            </h1>
             <div className="menu-container" ref={menuRef}>
               <button 
                 className="menu-button"
@@ -307,24 +358,26 @@ const HackerDashboard = () => {
               )}
             </div>
           </header>
-          <div className="profile-picture-container">
-            {user.profilePicture ? (
-              <img src={user.profilePicture} alt="Profile" className="profile-picture" />
-            ) : (
-              <div className="placeholder-image">
-                {user.firstName.charAt(0)}{user.lastName.charAt(0)}
-              </div>
-            )}
+          <div className="profile-section">
+            <div className="profile-picture-container">
+              {user.profilePicture ? (
+                <img src={user.profilePicture} alt="Profile" className="profile-picture" />
+              ) : (
+                <div className="placeholder-image">
+                  {user.firstName.charAt(0)}{user.lastName.charAt(0)}
+                </div>
+              )}
+            </div>
+            <div className="qr-code-container">
+              <QRCodeCanvas value={qrData} size={150} />
+            </div>
           </div>
-          <p className="user-email">{user.email}</p>
-          <div className="qr-code-container">
-            <QRCodeCanvas value={qrData} size={150} />
-          </div>
+          <p className="user-name">{user.firstName} {user.lastName }</p>
         </div>
 
         {/* Right Panel: Social Links Form */}
         <div className="right-panel">
-          <h2 className="form-title">Update Social Links</h2>
+          <h2 className="form-title">Update Socials</h2>
           <div className="social-link-field">
             <label htmlFor="github" onClick={() => handleIconClick('github', socialLinks.github)}>
               <img src={githubIcon} alt="Github" className="social-icon clickable" />
@@ -333,10 +386,10 @@ const HackerDashboard = () => {
               type="text" 
               id="github" 
               name="github" 
-              value={socialLinks.github} 
+              value={extractUsername(socialLinks.github, 'github')} 
               onChange={handleSocialChange}
               onKeyDown={handleKeyDown}
-              placeholder="Github URL" 
+              placeholder="Github Username" 
             />
           </div>
           <div className="social-link-field">
@@ -347,10 +400,10 @@ const HackerDashboard = () => {
               type="text" 
               id="linkedin" 
               name="linkedin" 
-              value={socialLinks.linkedin} 
+              value={extractUsername(socialLinks.linkedin, 'linkedin')} 
               onChange={handleSocialChange}
               onKeyDown={handleKeyDown}
-              placeholder="LinkedIn URL" 
+              placeholder="LinkedIn Username" 
             />
           </div>
           <div className="social-link-field">
@@ -361,7 +414,7 @@ const HackerDashboard = () => {
               type="text" 
               id="discord" 
               name="discord" 
-              value={socialLinks.discord} 
+              value={extractUsername(socialLinks.discord, 'discord')} 
               onChange={handleSocialChange}
               onKeyDown={handleKeyDown}
               placeholder="Discord Username" 
@@ -375,23 +428,31 @@ const HackerDashboard = () => {
               type="text" 
               id="instagram" 
               name="instagram" 
-              value={socialLinks.instagram} 
+              value={extractUsername(socialLinks.instagram, 'instagram')} 
               onChange={handleSocialChange}
               onKeyDown={handleKeyDown}
-              placeholder="Instagram URL" 
+              placeholder="Instagram Username" 
             />
           </div>
           <button className="update-btn" onClick={handleSocialUpdate} disabled={updating}>
-            {updating ? "Updating..." : "Update Social Links"}
+            {updating ? "Updating..." : "Update Socials"}
           </button>
         </div>
       </div>
 
-      {/* Add QR Modal */}
-      {showQRModal && (
+      {/* Discord QR Modal */}
+      {showDiscordQR && (
         <DiscordQRModal 
           username={socialLinks.discord.split('/').pop()} 
-          onClose={() => setShowQRModal(false)}
+          onClose={() => setShowDiscordQR(false)}
+        />
+      )}
+
+      {/* Instagram QR Modal */}
+      {showInstagramQR && (
+        <InstagramQRModal 
+          username={socialLinks.instagram.split('/').pop()} 
+          onClose={() => setShowInstagramQR(false)}
         />
       )}
     </div>

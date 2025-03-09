@@ -1,6 +1,8 @@
 export const isValidUrl = (url) => {
   try {
-    new URL(url);
+    // If URL doesn't have a protocol, add https:// for validation
+    const urlToCheck = url.startsWith('http') ? url : `https://${url}`;
+    new URL(urlToCheck);
     return true;
   } catch {
     return false;

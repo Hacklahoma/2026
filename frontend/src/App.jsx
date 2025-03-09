@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import ThemeProvider from './components/ThemeProvider';
 import './App.css';
 import './styles/Theme.css';
 
@@ -45,7 +46,7 @@ import Settings from './pages/hacker/Settings';
 
 function App() {
   return (
-    <>
+    <ThemeProvider>
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -118,10 +119,21 @@ function App() {
           {/* Unauthorized */}
           <Route path="/unauthorized" element={<div>Access Denied</div>} />
 
-          <Route path="/settings" element={<Settings />} />
+          {/* Settings - accessible by both hackers and staff */}
+          <Route 
+            path="/settings" 
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Fallback route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
-    </>
+    </ThemeProvider>
   );
 }
 

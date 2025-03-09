@@ -46,7 +46,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // User is authenticated (and authorized), so render the children
+  // User is authenticated (and authorized if role required), so render the children
   return children;
 };
 

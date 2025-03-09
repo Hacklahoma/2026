@@ -151,14 +151,6 @@ input[type="password"] {
     color: #ffffff;
   }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    background-color: #1a1a1a;
-    border-color: #404040;
-    color: #ffffff;
-  }
-
   .checkbox-group {
     color: #ffffff;
   }

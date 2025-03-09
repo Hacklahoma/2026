@@ -1,3 +1,5 @@
+@import './styles/Theme.css';
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -7,60 +9,48 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
 }
 
 button {
-  padding: 15px 30px;
-  font-size: 1.1rem;
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
-  border: 1px solid #000000;
-  border-radius: 30px;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-button:hover {
-  background-color: #21867a;
-  color: #ffffff;
-  border-color: #21867a;
+/* Remove default focus outlines and add custom ones */
+:focus {
+  outline: none;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-button.inverse {
-  background-color: #000000;
-  color: #ffffff;
-  border-color: #000000;
-}
-
-button.inverse:hover {
-  background-color: #21867a;
-  color: #ffffff;
-  border-color: #21867a;
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }

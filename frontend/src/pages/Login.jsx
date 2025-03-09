@@ -1,118 +1,137 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
+import axios from 'axios';
+import { useTheme } from '../components/ThemeProvider';
 import '../styles/Login.css';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-  const [loading, setLoading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const { isDarkMode, ThemeToggle } = useTheme();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Build the base URL using the SERVER_PORT (backend port)
+  // Read the server port from environment variables; default to 5174 if not set
   const serverPort = import.meta.env.VITE_SERVER_PORT || 5174;
   const baseURL = `http://${window.location.hostname}:${serverPort}`;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/api/auth/verify`, {
+          withCredentials: true,
+        });
+        
+        if (response.data.authenticated) {
+          // Redirect based on role
+          if (response.data.role === 'staff') {
+            navigate('/staff');
+          } else {
+            navigate('/hacker');
+          }
+        }
+      } catch (error) {
+        // User is not authenticated, stay on login page
+        console.log('User is not authenticated');
+      }
+    };
 
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setModalMessage('');
-  };
+    checkAuth();
+  }, [baseURL, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setModalOpen(true);
-    setModalMessage('Logging in, please wait...');
+    setError('');
+    setIsLoading(true);
+
     try {
       const response = await axios.post(
         `${baseURL}/api/auth/login`,
-        formData,
+        { email, password },
         { withCredentials: true }
       );
-      setModalMessage('Login successful! Redirecting...');
-      setTimeout(() => {
-        setModalOpen(false);
-        // Route based on the user's role returned from the server
-        if (response.data.role === 'staff') {
-          navigate('/staff');
-        } else {
-          navigate('/hacker');
-        }
-      }, 1500);
-    } catch (err) {
-      console.error(err);
-      setModalMessage(
-        err.response?.data?.message || 'Login failed. Please try again.'
-      );
-      setTimeout(() => {
-        setModalOpen(false);
-      }, 2000);
+
+      // Redirect based on role
+      if (response.data.role === 'staff') {
+        navigate('/staff');
+      } else {
+        navigate('/hacker');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || 'Invalid email or password');
+      } else {
+        setError('An error occurred. Please try again.');
+      }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="screen-container">
+    <div className={`screen-container ${isDarkMode ? 'dark-mode' : ''}`}>
+      <div className="theme-toggle-wrapper">
+        <ThemeToggle />
+      </div>
+      
       <div className="card-container">
         <div className="card">
           <h1 className="login-header">Login</h1>
+          
+          {error && <div className="error-message">{error}</div>}
+          
           <form onSubmit={handleSubmit} className="form-content">
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
-                id="email"
                 type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
+                className="themed-input"
+                placeholder="Enter your email"
               />
             </div>
+            
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
-                id="password"
                 type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
+                className="themed-input"
+                placeholder="Enter your password"
               />
             </div>
-            <button type="submit" className="button inverse" disabled={loading}>
-              LOGIN
+            
+            <button 
+              type="submit" 
+              className="login-button themed-button-primary"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </form>
+          
+          <div className="forgot-password">
+            <a href="/forgot-password">Forgot password?</a>
+          </div>
         </div>
         
         <div className="create-account-card">
-          <h2>Create an account</h2>
-          <button 
-            className="button"
-            onClick={() => navigate('/register')}
-          >
-            CREATE AN ACCOUNT
+          <h2>New to the platform?</h2>
+          <p>Create an account to apply for the hackathon and access exclusive resources.</p>
+          <button className="create-account-btn themed-button-secondary">
+            Create Account
           </button>
-          <p>Sign up for lots of features!</p>
-          <p>Leaderboards, Maps, Schedules, and more!</p>
         </div>
       </div>
-      <Modal
-        isOpen={modalOpen}
-        message={modalMessage}
-        onClose={handleModalClose}
-      />
     </div>
   );
 };
